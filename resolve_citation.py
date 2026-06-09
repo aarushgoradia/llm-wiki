@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import json
+import os
 import sys
 import urllib.parse
 import urllib.request
@@ -118,7 +119,7 @@ def resolve(title: str, api_key: str | None = None) -> dict:
 def main():
     parser = argparse.ArgumentParser(description="Resolve a paper citation via Semantic Scholar (arXiv fallback).")
     parser.add_argument("title", help="Paper title to look up")
-    parser.add_argument("--api-key", default=None, help="Semantic Scholar API key (for higher rate limits)")
+    parser.add_argument("--api-key", default=os.environ.get("S2_API_KEY"), help="Semantic Scholar API key (defaults to $S2_API_KEY)")
     args = parser.parse_args()
 
     result = resolve(args.title, api_key=args.api_key)

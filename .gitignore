@@ -1,0 +1,5 @@
+raw/papers/
+raw/assets/
+.venv/
+.DS_Store
+*.env
