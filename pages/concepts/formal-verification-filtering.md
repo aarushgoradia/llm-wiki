@@ -43,15 +43,26 @@ Veri2 addresses this by using JasperGold as a filter on GPT-5-distilled response
 - **Wrapper format:** JasperGold requires assertions in `assert property(propName);` form. VERT-style bare `property ... endproperty` blocks must be post-processed before formal elaboration — a non-trivial step at scale.
 - **Async resets:** JasperGold assumes async reset signals remain inactive during execution. Assertions involving async resets require simulation (Xilinx Vivado) as a complement — pure formal filtering is incomplete without this fallback.
 
+## Bidirectional Translation as Equivalence Proxy
+
+[[2026-wu-codev-sva]] introduces a complementary technique: SVA→NL→SVA' round-trip with JasperGold equivalence checking as a proxy for NL-SVA semantic alignment. If the round-trip SVA' is formally equivalent to the original SVA, the intermediate NL description is likely faithful. This catches two failure modes that formal verification alone misses:
+
+1. **Vacuous assertions:** `assert property (1'b1)` passes JasperGold against any RTL, but back-translates to a trivially obvious NL property, making the misalignment visible
+2. **Operator precedence bugs:** subtle SVA syntax errors (e.g., `and` binding tighter than `|->`) produce non-equivalent re-translations, exposing the error
+
+**Critical limitation:** this is *design-relative* equivalence, not semantic equivalence of the SVA formulas in isolation. JasperGold checks whether SVA ≡ SVA' on the specific RTL design c_i — i.e., for all traces of c_i, SVA holds iff SVA' holds. If c_i does not exercise a particular state, two assertions that diverge in that state will appear equivalent. Subtle NL-SVA misalignment can survive the filter when the test RTL doesn't cover the distinguishing behavior. The technique is a strong heuristic, not a formal semantic guarantee.
+
 ## Key Papers
 
 - [[2025-menon-vert]] — formal verification used in dataset curation only, not in training loop; establishes the baseline that formal-filtered approaches improve upon
+- [[2026-wu-codev-sva]] — most complete instantiation: JasperGold in Stage 1 (initial SVA curation) and Stage 2 (bidirectional equivalence checking); outputs proper `assert property()` wrappers
 
 ## Open Questions
 
 - What fraction of VERT-style outputs fail formal verification on real SoCs, and what are the most common failure modes?
 - Can bounded model checking with aggressive timeouts provide sufficient filtering at the scale needed for LLM training data?
 - Would VERT + JasperGold filtering in the training pipeline close the gap with distillation-based approaches like Veri2?
+- Does design-relative bidirectional equivalence provide sufficient semantic alignment guarantees, or do misaligned NL-SVA pairs survive when test RTL doesn't exercise distinguishing states?
 
 ## My Take
 

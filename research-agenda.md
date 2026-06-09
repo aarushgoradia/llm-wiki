@@ -8,6 +8,8 @@
 - [ ] Do reasoning-class models (o1, o3, GPT-5) close the gap on nested if-else SVA generation without domain-specific fine-tuning? — *from [[2025-menon-vert]], 2026-06-08*
 - [ ] Is a semantic completeness metric for assertion suites achievable without human annotation — something that captures whether the *right* properties were written, beyond structural CPC? — *from [[2025-menon-vert]], 2026-06-08*
 - [ ] How does VERT generalize to non-RISC-V architectures and non-open-source SoCs, where naming conventions and design idioms differ significantly? — *from [[2025-menon-vert]], 2026-06-08*
+- [ ] Does design-relative bidirectional equivalence checking (CodeV-SVA Stage 2) provide sufficient NL-SVA semantic alignment guarantees, or do misaligned pairs survive when the test RTL fails to exercise the distinguishing states? — *from [[2026-wu-codev-sva]], 2026-06-08*
+- [ ] Would RTL→SVA-style training with formal filtering in the loop (no NL required) close the gap with NL2SVA models like CodeV-SVA, making the harder NL2SVA task unnecessary for full automation? — *from [[2026-wu-codev-sva]], 2026-06-08*
 
 ## My Hunches
 <!-- HUMAN-OWNED — never touch this section -->

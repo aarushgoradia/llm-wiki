@@ -20,16 +20,24 @@ SVA generation is a code-to-code translation task. The input is Verilog/SystemVe
 
 ## Task Framing Variants
 
+Two distinct tasks exist under the SVA generation umbrella — they share output format but differ fundamentally in input and required capability:
+
 | Framing | Input | Output | Used by |
 |---------|-------|--------|---------|
-| Snippet-level | Single `always` block, ~10–20 signals | 1–5 assertions | [[vert-dataset]] |
-| Module-level | Full RTL module, all signals | Full assertion suite | Industrial practice, Veri2 |
+| RTL→SVA (snippet) | Single `always` block, ~10–20 signals | 1–5 assertions | [[vert-dataset]] |
+| RTL→SVA (module) | Full RTL module, all signals | Full assertion suite | Industrial practice, Veri2 |
+| NL2SVA | Natural language property + RTL context | SVA matching NL intent | [[2026-wu-codev-sva]] |
 
-The snippet-level framing is easier to train on (synthetic data is tractable) but has an uncharacterized distribution shift to real verification targets.
+**RTL→SVA** is a code-to-code task: the model reads RTL and generates assertions that capture its behavior. The field is smaller but more automatable end-to-end — no human NL formulation required.
+
+**NL2SVA** is a semantic translation task: the model must understand a human-expressed property intent and render it faithfully in SVA. Requires an upstream step where an engineer (or LLM) articulates what to verify in natural language. Higher-level task, but less automatable in practice.
+
+The two fields are complementary: NL2SVA assumes properties are already identified; RTL→SVA discovers them from code structure. Training data from one does not transfer to the other — [[vert-dataset]] (RTL→SVA, no NL signal) produces 1.9% Func.@1 on NL2SVA benchmarks when naively applied ([[2026-wu-codev-sva]] Table 3).
 
 ## Key Papers
 
-- [[2025-menon-vert]] — introduces VERT, the first open-source SVA generation dataset; establishes that fine-tuned small models can outperform GPT-4o; defines the four primary LLM failure modes for this task
+- [[2025-menon-vert]] — introduces RTL→SVA task at scale; establishes that fine-tuned small models can outperform GPT-4o; defines four primary LLM failure modes; snippet-level framing
+- [[2026-wu-codev-sva]] — introduces NL2SVA pipeline; RTL-grounded synthesis; bidirectional equivalence filtering; CodeV-SVA-14B surpasses GPT-5 on FVEval
 
 ## Known LLM Failure Modes (from VERT §3)
 

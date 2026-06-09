@@ -78,6 +78,9 @@ Variable cleanliness dominates. Training on bad names is worse than not fine-tun
 - [[formal-verification-filtering]] — VERT's absence of formal filtering in the training loop is a key architectural gap this concept tracks
 - [[jasper-gold]] — used for validation of the VERT dataset and for elaborating assertions in downstream eval; requires `assert property` wrappers that VERT does not produce
 - [[vert-dataset]] — the artifact itself (dataset + generation pipeline)
+- [[2026-wu-codev-sva]] — compares VERT data for NL2SVA training (1.9% Func.@1); unfair comparison (different task — VERT has no NL signal), but useful as a data diversity contrast
+
+> **Context-dependent:** [[2026-wu-codev-sva]] Table 3 reports 1.9% Func.@1 when training on VERT data for NL2SVA. This holds for the NL2SVA task framing only. VERT was designed for RTL→SVA and contains no natural language intent signal; the comparison does not reflect VERT's performance on its own task.
 
 ## Open Questions
 
