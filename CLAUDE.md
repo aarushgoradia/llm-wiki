@@ -22,6 +22,7 @@ wiki/
 ├── index.md                   ← catalog of all pages, updated every operation
 ├── log.md                     ← append-only chronological record
 ├── research-agenda.md         ← open questions (see §11)
+├── reading-queue.md           ← uncovered references ranked by citation count (see §7.2 step 2, §9)
 ├── scratchpad.md              ← ephemeral working notes, never committed
 ├── raw/
 │   └── papers/                ← immutable source PDFs, never modify
@@ -96,6 +97,10 @@ How it works. Focus on what is novel. Link to concept and system pages with [[Wi
 ## Results
 
 Key numbers. Benchmarks, datasets, baselines. Prefer concrete claims over adjectives.
+Every extracted number must carry a source anchor giving the page and table/figure it
+came from, e.g. "2.9x speedup over baseline (p.7, Table 3)". A number without an anchor
+is not spot-checkable without re-reading the PDF and does not belong in this section.
+This applies to numbers in prose and tables as well as bullets.
 
 ## Limitations
 
@@ -122,10 +127,12 @@ Questions this paper raises that are not answered here. These are copied to rese
 <!-- HUMAN-OWNED — never overwrite or append to this section -->
 ```
 
-**`status` values:** `unread` (page created but PDF not read), `reading` (in progress), `read` (fully processed), `reference` (skimmed for citations only, not fully ingested).
+**`status` values:** `unread` (page created but PDF not read), `reading` (in progress), `read-pending-take` (fully processed by Claude; awaiting the human's My Take), `read` (fully processed **and** My Take written), `reference` (skimmed for citations only, not fully ingested).
+
+`read-pending-take` is the terminal status for an ingest — Claude never sets `read`. Only the human promotes a page to `read`, after writing its My Take. Claude never writes My Take content (§6); its only job here is to surface pending pages in the "Needs Your Take" section of index.md (§9), refreshed on every ingest and lint.
 
 **`tags` vocabulary** (use only from this list; add new terms to the list here when genuinely needed):
-`architecture`, `attention`, `training`, `inference`, `quantization`, `pruning`, `distillation`, `efficient-inference`, `hardware`, `accelerator`, `memory`, `compilers`, `computer-vision`, `nlp`, `multimodal`, `rl`, `theory`, `benchmark`, `survey`, `systems`.
+`architecture`, `attention`, `training`, `inference`, `quantization`, `pruning`, `distillation`, `efficient-inference`, `hardware`, `accelerator`, `memory`, `compilers`, `computer-vision`, `nlp`, `multimodal`, `rl`, `theory`, `benchmark`, `survey`, `systems`, `dataflow`, `sparsity`, `energy-efficiency`, `kv-cache`, `verification`.
 
 ### 5.2 Person Page
 
@@ -267,33 +274,49 @@ The following sections are **owned by the human and must never be modified**:
 
 ## 7. Ingest Workflow
 
+### 7.1 Session Scope
+
+One paper is fully ingested and committed before the next begins. For batch requests
+("ingest these five papers"), process them strictly sequentially: run the full §7.2
+checklist and make one commit per paper. Never interleave two ingests. If context has
+been compacted or summarized mid-batch, re-read CLAUDE.md in full before starting the
+next paper.
+
+### 7.2 Checklist
+
 Run this checklist in order for every paper. Do not skip steps.
 
 1. **Resolve metadata.** Run `python3 resolve_citation.py "<title>"` from the wiki root. If the paper is not found and you have the PDF, extract title/authors/year/venue manually.
 
-2. **Check for duplicates.** Run `rg -l "<title>"  pages/papers/`. If a page already exists, update it rather than creating a new one.
+2. **Map the citation graph.** Pull the paper's reference list and citing papers from Semantic Scholar via `python3 resolve_citation.py --graph "<title>"`. Cross-reference each reference against `pages/papers/` (match on title and `arxiv_id`, as in step 3). Record coverage for the log entry, e.g. "4 of 11 references already in wiki". For each reference **not** in the wiki, update `reading-queue.md` (format in §9): add a line if the paper is not yet listed, increment its cited-by count if it is, then re-sort by count descending. If the Semantic Scholar graph endpoints are unavailable, note that in the log entry and continue — do not block the ingest.
 
-3. **Read the source.** Read the PDF from `raw/papers/`. Read it in full; do not skim unless `status: reference` is intended.
+3. **Check for duplicates.** Check both identifiers:
+   - arXiv ID: `rg -l "<arxiv-id>" pages/papers/`
+   - Title: `rg -il "<title>" pages/papers/`. Title matching must be case- **and punctuation-insensitive**: `rg -i` handles case but not punctuation, so if the title contains punctuation, search for a distinctive punctuation-free substring instead, and compare candidates after lowercasing and stripping punctuation from both sides.
 
-4. **Create the paper page.** Write `pages/papers/YYYY-<author>-<slug>.md` using the template in §5.1. Fill every frontmatter field. Set `status: read`.
+   If either check hits, update the existing page rather than creating a new one.
 
-5. **Create or update system pages.** For every named model, dataset, benchmark, or hardware component mentioned: check `rg -l "<name>" pages/systems/`. Create the page if it does not exist. Append to "Papers Using This System" if it does.
+4. **Read the source.** Read the PDF from `raw/papers/`. Read it in full; do not skim unless `status: reference` is intended.
 
-6. **Check concept thresholds.** For every significant concept introduced or used: run `rg -c "<concept>" pages/`. If the concept now has 2+ substantive mentions across the wiki and no concept page exists, create one.
+5. **Create the paper page.** Write `pages/papers/YYYY-<author>-<slug>.md` using the template in §5.1. Fill every frontmatter field. Set `status: read-pending-take` (never `read` — see §5.1).
 
-7. **Check author thresholds.** For every author on this paper: run `rg -l "<last name>" pages/papers/`. Count appearances. If ≥3 and no person page exists, create one. If a person page exists, append this paper to "Papers in This Wiki."
+6. **Create or update system pages.** For every named model, dataset, benchmark, or hardware component mentioned: check `rg -l "<name>" pages/systems/`. Create the page if it does not exist. Append to "Papers Using This System" if it does.
 
-8. **Update connections.** Add `[[WikiLinks]]` to the new paper page pointing at related pages. Add a back-link from each of those pages pointing at the new paper page in their "Connections" or "Key Papers" section.
+7. **Check concept thresholds.** For every significant concept introduced or used: run `rg -c "<concept>" pages/`. The count from `rg -c` is a **heuristic upper bound**, not the answer — it counts raw string matches. Before creating a concept page, inspect the matches with `rg -n "<concept>" pages/` and count only substantive mentions (a paragraph explaining or applying the idea). WikiLinks, citations, tag lines, and index/log entries are not substantive. Create the page only if substantive mentions ≥ 2 and no page exists.
 
-9. **Check for contradictions.** Compare the paper's claims against related pages. Apply the contradiction rules in §8.
+8. **Check author thresholds.** For every author on this paper: run `rg -l "<last name>" pages/papers/`. Count appearances. If ≥3 and no person page exists, create one. If a person page exists, append this paper to "Papers in This Wiki."
 
-10. **Append to research-agenda.md.** Copy the paper's "Open Questions" items to `research-agenda.md` using the format in §11.
+9. **Update connections.** Add `[[WikiLinks]]` to the new paper page pointing at related pages. Add a back-link from each of those pages pointing at the new paper page in their "Connections" or "Key Papers" section.
 
-11. **Update index.md.** Add the new paper (and any new people/concepts/systems pages) to the appropriate section using the format in §9.
+10. **Check for contradictions.** Compare the paper's claims against related pages. Apply the contradiction rules in §8.
 
-12. **Append to log.md.** Use the format in §9.
+11. **Append to research-agenda.md.** Copy the paper's "Open Questions" items to `research-agenda.md` using the format and dedupe rule in §11.
 
-13. **Commit.** Follow §12.
+12. **Update index.md.** Add the new paper (and any new people/concepts/systems pages) to the appropriate section using the format in §9. Refresh the "Needs Your Take" section from `rg -l "^status: read-pending-take" pages/`.
+
+13. **Append to log.md.** Use the format in §9. Include the citation-graph coverage line from step 2.
+
+14. **Commit.** Follow §14.
 
 ---
 
@@ -331,16 +354,24 @@ When uncertain which tier applies, default to Disputed. Never silently leave a c
 
 ---
 
-## 9. index.md and log.md Format
+## 9. index.md, log.md, and reading-queue.md Format
 
 ### index.md
 
-Keep sections in this order: Papers, People, Concepts, Systems, Syntheses. Within each section, sort by year descending (papers/syntheses) or alphabetically (people/concepts/systems). Update on every ingest, synthesis creation, and lint pass.
+Keep sections in this order: Needs Your Take, Papers, People, Concepts, Systems, Syntheses. Within each section, sort by year descending (papers/syntheses) or alphabetically (people/concepts/systems). Update on every ingest, synthesis creation, and lint pass.
+
+"Needs Your Take" lists every page with `status: read-pending-take`. Regenerate it from `rg -l "^status: read-pending-take" pages/` on every ingest and lint — remove pages the human has promoted to `read`, add newly ingested ones. Claude only maintains this list; it never writes the My Take content itself (§6).
 
 ```markdown
 # Wiki Index
 
 _Last updated: YYYY-MM-DD_
+
+## Needs Your Take
+
+<!-- Pages awaiting the human's My Take. Auto-refreshed on every ingest and lint. -->
+
+- [[2017-vaswani-attention-is-all-you-need]]
 
 ## Papers
 
@@ -373,7 +404,21 @@ Each entry starts with `## [YYYY-MM-DD] <operation> | <title>`. Operations: `ing
 - Created [[2017-vaswani-attention-is-all-you-need]]
 - Created [[transformer]] (system)
 - Created [[self-attention]] (concept, 2+ mentions reached)
+- Citation graph: 4 of 11 references already in wiki; 7 added/updated in reading-queue.md
 - Added open questions to research-agenda.md
+```
+
+### reading-queue.md
+
+References cited by wiki papers but not yet ingested. One line per paper: title, year, and a cited-by count (how many wiki papers cite it). Maintained during ingest (§7.2 step 2): add new references, increment counts on repeat appearances, keep the file sorted by count descending (ties: year descending). Remove a paper's line when it is ingested.
+
+```markdown
+# Reading Queue
+
+<!-- Maintained by Claude during ingest (§7.2 step 2). Sorted by cited-by count, descending. -->
+
+- FlashAttention: Fast and Memory-Efficient Exact Attention (2022) — cited by 3 wiki papers
+- Efficient Memory Management for LLM Serving with PagedAttention (2023) — cited by 1 wiki paper
 ```
 
 ---
@@ -408,6 +453,9 @@ Each entry starts with `## [YYYY-MM-DD] <operation> | <title>`. Operations: `ing
 **During ingest:** Copy each item from the paper's "Open Questions" section to `## Open Questions` using the format:
 `- [ ] <question> — *from [[paper-slug]], YYYY-MM-DD*`
 
+**Dedupe before appending.** Search the existing questions for near-duplicates first (`rg -in "<distinctive keywords>" research-agenda.md`). If an existing question asks substantially the same thing, do not add a new line — append the new attribution to the existing one instead:
+`- [ ] <question> — *from [[old-slug]], YYYY-MM-DD; also [[new-slug]], YYYY-MM-DD*`
+
 **During lint:** For any open question that is now answered by an existing synthesis or paper page, change `[ ]` to `[x]` and append ` → [[answer-page]]`. Do not delete resolved questions.
 
 **Never touch `## My Hunches`.** This section belongs to the human entirely.
@@ -418,15 +466,27 @@ Each entry starts with `## [YYYY-MM-DD] <operation> | <title>`. Operations: `ing
 
 Run lint when asked, or proactively after ingesting 5+ papers in a session. Work through each check in order.
 
-1. **Orphan pages.** `rg -rL "pages/" --include="*.md" index.md` — find pages not linked from index.md. Re-link or flag for deletion.
+1. **Orphan pages.** Find pages whose slug never appears as a `[[WikiLink]]` in index.md, then re-link or flag for deletion:
+   ```bash
+   find pages -name '*.md' | while read -r f; do
+     slug=$(basename "$f" .md)
+     rg -q -F "[[$slug]]" index.md || echo "ORPHAN: $f"
+   done
+   ```
 2. **Missing inbound links.** For each page, check whether other relevant pages link to it. Add missing `[[WikiLinks]]` in "Connections" sections.
-3. **Unmet concept thresholds.** `rg -c "<term>" pages/` for important terms. Create concept pages where count ≥ 2 substantive mentions and no page exists.
+3. **Unmet concept thresholds.** `rg -c "<term>" pages/` for important terms. The count is a **heuristic upper bound** (raw string matches): inspect with `rg -n "<term>" pages/` and count only substantive mentions — a paragraph explaining or applying the idea, excluding WikiLinks, citations, tag lines, and index/log entries. Create concept pages where substantive mentions ≥ 2 and no page exists.
 4. **Unmet author thresholds.** Check author appearance counts. Create person pages where count ≥ 3 and no page exists.
 5. **Stale claims.** Scan contradiction blockquotes. If a Disputed claim has been resolved by a subsequently ingested paper, upgrade to Superseded or Context-dependent.
 6. **Incomplete frontmatter.** `rg -l "^venue: \"\"" pages/papers/` — find pages with missing fields. Fill what can be resolved via `resolve_citation.py`.
-7. **research-agenda.md harvest.** Mark resolved open questions `[x]` as described in §11. Add new open questions surfaced during the lint pass.
-8. **index.md freshness.** Verify every page under `pages/` appears in index.md.
-9. Append a `lint` entry to log.md summarizing what was found and fixed.
+7. **Unanchored results.** Flag Results bullets that contain digits but no `(p.N, ...)` source anchor (§5.1), then add the missing anchors from the PDF:
+   ```bash
+   awk '/^## Results/{r=1; next} /^## /{r=0} r && /^- / && /[0-9]/ && !/\(p\.[0-9]+[^)]*\)/ {print FILENAME ": " $0}' pages/papers/*.md
+   ```
+   This catches bullet lines only; numbers in Results prose and tables also require anchors — check those by eye while fixing the flagged bullets.
+8. **Needs Your Take refresh.** Regenerate index.md's "Needs Your Take" section from `rg -l "^status: read-pending-take" pages/` (§9).
+9. **research-agenda.md harvest.** Mark resolved open questions `[x]` as described in §11. Add new open questions surfaced during the lint pass (dedupe per §11).
+10. **index.md freshness.** Verify every page under `pages/` appears in index.md.
+11. Append a `lint` entry to log.md summarizing what was found and fixed.
 
 ---
 
@@ -476,7 +536,8 @@ These rules have no exceptions:
 
 - **Never modify `raw/`.** Source files are immutable.
 - **Never overwrite `## My Take` or `## My Notes`.** Human-owned. Treat as read-only.
+- **Never set `status: read` or write My Take content.** Ingest ends at `read-pending-take`; only the human promotes a page to `read`.
 - **Never commit `scratchpad.md`.** It is ephemeral.
 - **Never leave a contradiction unflagged.** Classify and mark it before the session ends.
-- **Always update index.md and log.md** as part of every ingest, synthesis, and lint operation. These are not optional cleanup steps.
+- **Always update index.md and log.md** as part of every ingest, synthesis, and lint operation, **and reading-queue.md** as part of every ingest. These are not optional cleanup steps.
 - **Always resolve metadata via `resolve_citation.py`** before reading a PDF. Do not manually guess venue or year when the script can retrieve them.
