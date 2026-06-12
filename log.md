@@ -35,3 +35,16 @@
 - Created [[formal-verification-filtering]] (concept, 2+ substantive mentions reached)
 - Limitations section augmented with first-hand knowledge from Veri2 development (bare property wrapper gap, snippet vs module framing, no formal filtering in training loop)
 - Added 5 open questions to research-agenda.md
+
+## [2026-06-11] ingest | Eyeriss: An Energy-Efficient Reconfigurable Accelerator for Deep Convolutional Neural Networks
+
+- Created [[2017-chen-eyeriss]] (paper, status read-pending-take, citekey chen2017)
+- Metadata note: ingest was requested as "Eyeriss v1, ISCA 2016"; the item in the wiki collection is the JSSC 2017 journal version (chen2017) — ingested per library.bib ground truth. The ISCA 2016 companion (dataflow taxonomy/energy model) is a distinct paper, now in reading-queue.md. Eyeriss v2 (2019) is also distinct; version notes added on the paper and system pages to keep dedupe clean.
+- Created [[eyeriss]] (system, hardware), [[alexnet]] (system, model), [[vgg-16]] (system, model), [[imagenet]] (system, dataset), [[caffe]] (system, framework), [[mnist]] (system, dataset), [[jetson-tk1]] (system, hardware), [[xilinx-vc707]] (system, hardware)
+- Created concepts [[dataflow]], [[row-stationary]], [[weight-stationary]], [[output-stationary]], [[no-local-reuse]], [[memory-hierarchy-energy-cost]] — 2-mention threshold explicitly overridden per Aarush's instruction (seeding the dataflow taxonomy for the upcoming accelerator cluster)
+- Citation graph: Semantic Scholar references endpoint unavailable for this paper (publisher-elided, `data: null`); reference list harvested manually from the PDF instead. 0 of 36 references already in wiki; 34 added to reading-queue.md (excluded: the video demo [29] and the ISSCC 2016 conference version of this same paper [36])
+- Pulled 33 Zotero annotations into Highlights via pull_annotations.py → page listed under "read but unprocessed"
+- PDF already mirrored in raw/papers/ under legacy name (Eyeriss_An_Energy-Efficient_Reconfigurable_Accelerator_for_Deep_Convolutional_Neural_Networks.pdf); left untouched per §15, staged in this commit
+- No contradictions with existing pages (SVA cluster is disjoint); no VERT/CodeV-SVA connection forced — paper is deliberately sparsely connected as the first node of the accelerator cluster
+- No person pages (all four authors at 1 wiki paper, threshold 3)
+- Added 4 open questions to research-agenda.md, including the seeded attention-workload dataflow question

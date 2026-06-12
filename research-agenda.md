@@ -10,6 +10,10 @@
 - [ ] How does VERT generalize to non-RISC-V architectures and non-open-source SoCs, where naming conventions and design idioms differ significantly? — *from [[2025-menon-vert]], 2026-06-08*
 - [ ] Does design-relative bidirectional equivalence checking (CodeV-SVA Stage 2) provide sufficient NL-SVA semantic alignment guarantees, or do misaligned pairs survive when the test RTL fails to exercise the distinguishing states? — *from [[2026-wu-codev-sva]], 2026-06-08*
 - [ ] Would RTL→SVA-style training with formal filtering in the loop (no NL required) close the gap with NL2SVA models like CodeV-SVA, making the harder NL2SVA task unnecessary for full automation? — *from [[2026-wu-codev-sva]], 2026-06-08*
+- [ ] How does the RS dataflow perform on fully connected layers, where convolutional reuse vanishes and filter reuse exists only across the batch dimension? — *from [[2017-chen-eyeriss]], 2026-06-11*
+- [ ] With 16–78% of filter weights prunable to zero, how much additional DRAM-access reduction would weight-side compression deliver on top of fmap-only RLC? — *from [[2017-chen-eyeriss]], 2026-06-11*
+- [ ] Eyeriss claims DRAM traffic can be fully overlapped with processing "at negligible cost" — what control changes does that actually require, and does it hold for VGG-scale fmaps where ramp-up dominates? — *from [[2017-chen-eyeriss]], 2026-06-11*
+- [ ] Which of RS's assumptions about reuse structure (convolutional weight/input/psum reuse) break for attention workloads, and what replaces the dataflow argument there? — *from [[2017-chen-eyeriss]], 2026-06-11*
 
 ## My Hunches
 <!-- HUMAN-OWNED — never touch this section -->
