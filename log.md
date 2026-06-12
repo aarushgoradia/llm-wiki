@@ -1,5 +1,15 @@
 # Wiki Log
 
+## [2026-06-12] update | results tables + figure extraction, Eyeriss retrofit
+
+- CLAUDE.md §2: added `assets/<citekey>/` directory entry for extracted paper figures
+- CLAUDE.md §5.1: extended Results spec — markdown tables permitted for spec-sheet/comparative data; mermaid blocks for graph-shaped structures; figure extraction via PyMuPDF at ~2× zoom into `assets/<citekey>/`, embedded with `![[...]]` + caption
+- [[2017-chen-eyeriss]] Results section retrofitted:
+  - Chip-spec bullets → **Chip specification** markdown table (p.9, Table IV and §VI)
+  - AlexNet + VGG-16 measured results → **Measured benchmark results** comparative table with Source column
+  - Added mermaid diagram of four-level memory hierarchy (DRAM → GLB 108 kB → NoC → per-PE spads)
+  - Extracted and embedded Fig. 4 (p.4, PE-set dataflow) and Fig. 16 (p.10–11, chip power breakdown) into `assets/chen2017/`
+
 ## [2026-06-11] update | wu2026 backfill, legacy PDFs staged, status migration
 
 - Backfilled `citekey: "wu2026"` into [[2026-wu-codev-sva]] frontmatter (was missing)

@@ -29,6 +29,8 @@ wiki/
 ├── pull_annotations.py        ← Zotero annotations → markdown for ## Highlights
 ├── raw/
 │   └── papers/                ← wiki-side PDF mirror; existing files immutable (see §2.1)
+├── assets/
+│   └── <citekey>/             ← extracted paper figures; one directory per paper; immutable once staged
 └── pages/
     ├── papers/                ← one page per paper
     ├── people/                ← one page per author (threshold: 3+ appearances)
@@ -117,6 +119,16 @@ Every extracted number must carry a source anchor giving the page and table/figu
 came from, e.g. "2.9x speedup over baseline (p.7, Table 3)". A number without an anchor
 is not spot-checkable without re-reading the PDF and does not belong in this section.
 This applies to numbers in prose and tables as well as bullets.
+
+Markdown tables are permitted for spec-sheet or comparative data; the anchoring rule
+still applies — put the anchor in a dedicated Source column or as a caption line below
+the table. Mermaid blocks are permitted where a structure is genuinely graph-shaped
+(hierarchies, flows); do not force spatial figures into mermaid. Key figures from the
+paper itself may be extracted: rasterize the figure's page region with PyMuPDF at ~2×
+zoom, save to `assets/<citekey>/`, and embed with `![[assets/<citekey>/figN.png]]` plus
+a caption line citing the original figure number and page. Limit extractions to figures
+that are load-bearing for understanding the paper (typically 1–3); stage extracted
+images in the per-paper commit.
 
 ## Highlights
 

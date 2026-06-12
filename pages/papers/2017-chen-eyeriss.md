@@ -1,12 +1,23 @@
 ---
 title: "Eyeriss: An Energy-Efficient Reconfigurable Accelerator for Deep Convolutional Neural Networks"
-authors: [Yu-Hsin Chen, Tushar Krishna, Joel S. Emer, Vivienne Sze]
-venue: "IEEE Journal of Solid-State Circuits (JSSC), vol. 52, no. 1"
+authors:
+  - Yu-Hsin Chen
+  - Tushar Krishna
+  - Joel S. Emer
+  - Vivienne Sze
+venue: IEEE Journal of Solid-State Circuits (JSSC), vol. 52, no. 1
 year: 2017
 arxiv_id: ""
-citekey: "chen2017"
-tags: [hardware, accelerator, dataflow, energy-efficiency, inference, memory, computer-vision]
-status: read-pending-take
+citekey: chen2017
+tags:
+  - hardware
+  - accelerator
+  - dataflow
+  - energy-efficiency
+  - inference
+  - memory
+  - computer-vision
+status: read
 ---
 
 > **Version note:** This is **Eyeriss v1** — the JSSC 2017 journal version of the fabricated 65 nm chip (extended from ISSCC 2016). It is distinct from two related papers: the ISCA 2016 companion ("Eyeriss: A Spatial Architecture for Energy-Efficient Dataflow...", cited here as [32]), which develops the dataflow taxonomy and energy model in depth, and **Eyeriss v2** (Chen et al., 2019), a separate architecture not yet in the wiki. Do not merge any of these into this page.
@@ -36,15 +47,55 @@ Note for spot-checkers: the quantitative dataflow taxonomy comparison (against [
 Page anchors refer to PDF pages 1–12 (journal pages 127–138).
 
 - RS dataflow is 1.4–2.5× more energy efficient than existing dataflows from previous work on AlexNet (p.3, §IV-A; detailed comparison delegated to ISCA 2016 companion [32]).
-- AlexNet (5 CONV layers, 1 V, batch N=4): 34.7 frames/s average, 23.1 GMACS effective throughput, 278 mW measured chip power, 83.1 GMACS/W (p.9, §VI-A).
-- AlexNet DRAM traffic: 15.4 MB per 4-frame batch = 0.0029 DRAM access/MAC (37.4 accesses/input pixel), against 2.66 G MACs and 208.5 MB of global-buffer accesses (p.10, Table V).
-- VGG-16 (13 CONV layers, 1 V, batch N=3): 0.7 frames/s at 236 mW; 321.1 MB DRAM per 3-frame batch = 0.0035 access/MAC (1066.6 accesses/input pixel) (p.11, §VI-B, Table VI).
+
+**Chip specification** — all values from p.9, Table IV and §VI:
+
+| Parameter | Value |
+|-----------|-------|
+| Process | TSMC 65 nm LP |
+| Die size | 4.0 × 4.0 mm |
+| PE count | 168 |
+| Global buffer | 108 kB SRAM |
+| Total on-chip SRAM | 181.5 kB |
+| Precision | 16-bit fixed-point |
+| Core clock | 100–250 MHz |
+| Peak throughput | 33.6 GMACS @ 200 MHz / 1 V |
+| Core area: storage share | GLB + spads = 2/3 of core area; multipliers + adders = 7.4% (p.9, §VI, Fig. 15) |
+| Spad vs GLB | Spads: 2.5× GLB area, 1.5× less aggregate capacity (p.9, §VI, Fig. 15) |
+
+Four-level memory hierarchy with access-cost ordering from highest (DRAM) to lowest (spads), per §I and §IV-B (p.2, p.6):
+
+```mermaid
+graph TD
+    DRAM["DRAM<br/>(off-chip · highest cost/access)"]
+    GLB["Global Buffer (GLB)<br/>108 kB SRAM"]
+    NoC["Inter-PE Communication<br/>(NoC · local psum links)"]
+    SPADs["Per-PE Scratch Pads<br/>Filter 224 B · Ifmap 24 B · Psum 48 B"]
+    DRAM --> GLB --> NoC --> SPADs
+```
+
+**Measured benchmark results** (both at 1 V):
+
+| Metric | AlexNet (N=4) | VGG-16 (N=3) | Source |
+|--------|--------------|--------------|--------|
+| Throughput | 34.7 frames/s | 0.7 frames/s | p.9, §VI-A; p.11, §VI-B |
+| Effective compute | 23.1 GMACS | — | p.9, §VI-A |
+| Chip power | 278 mW | 236 mW | p.9, §VI-A; p.11, §VI-B |
+| Energy efficiency | 83.1 GMACS/W | — | p.9, §VI-A |
+| DRAM traffic | 15.4 MB / batch | 321.1 MB / batch | p.10, Table V; p.11, Table VI |
+| DRAM access/MAC | 0.0029 (37.4/pixel) | 0.0035 (1066.6/pixel) | p.10, Table V; p.11, Table VI |
+| GLB accesses | 208.5 MB | — | p.10, Table V |
+
 - Voltage scaling on AlexNet: maximum throughput 45 frames/s at 1.17 V; maximum energy efficiency 122.8 GMACS/W at 0.82 V (p.10–11, Fig. 17).
 - System-energy framing: ALUs account for <10% of measured chip power while data-movement components (spads, GLB, NoC) reach up to 45%, and chip power alone excludes DRAM — the paper's argument for why DRAM access count, reported above, is the system-level energy metric (p.10–11, Fig. 16; p.6, §IV-B calls DRAM "the most energy consuming data movement per access").
 - RLC compression: fmap DRAM accesses cut by nearly 30% in CONV1 up to nearly 75% in CONV5 of AlexNet; overall per-layer DRAM access reduction 1.2×–1.9× (p.6, §IV-B; p.7, Fig. 9).
 - Sparsity: ~40% of CONV2 and ~75% of CONV5 ifmap values are zero in AlexNet; zero-gating saves 45% of PE power versus a PE without gating logic (p.6, §IV-B; p.9, §V-C).
-- Chip: TSMC 65 nm LP, 4.0×4.0 mm die, 168 PEs, 108 kB GLB, 181.5 kB total on-chip SRAM, 16-bit fixed point, core clock 100–250 MHz, peak throughput 33.6 GMACS at 200 MHz / 1 V (p.9, Table IV and §VI).
-- Area: on-chip storage (GLB + spads) takes two-thirds of core area; all 168 multipliers and adders only 7.4%; spads occupy 2.5× the GLB's area while holding 1.5× less aggregate capacity (p.9, §VI, Fig. 15).
+
+![[assets/chen2017/fig4.png]]
+*Fig. 4 (p.4): Dataflow in a PE set for 2-D convolution — filter rows reused horizontally, ifmap rows reused diagonally, psum rows accumulated vertically.*
+
+![[assets/chen2017/fig16.png]]
+*Fig. 16 (p.10–11): Chip power breakdown for CONV1 and CONV5 of AlexNet; scratch pads dominate (42.5%/33.1%), multiplier & adder only 8.9%/3.0% — confirming data movement as the dominant energy cost.*
 
 ## Highlights
 
@@ -151,6 +202,9 @@ Page anchors refer to PDF pages 1–12 (journal pages 127–138).
 ## My Take
 
 <!-- HUMAN-OWNED — never overwrite or append to this section -->
+Extremely interesting paper. From my understanding, it revolutionized the CNN architecture field, which either had naive implementations or followed some other dataflow. Some thoughts:
+- I wish it compared the statistics to other chips (naive approaches). I would've liked to see how much DRAM access a basic CPU or GPU at the time would've used.
+- Although important then, many of the issues have been solved in round-about ways, which I will go over soon.
 
 ## My Notes
 
