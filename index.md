@@ -1,6 +1,18 @@
 # Wiki Index
 
-_Last updated: 2026-06-08_
+_Last updated: 2026-06-11_
+
+## Needs Your Take
+
+<!-- Pages awaiting the human's My Take. Auto-refreshed on every ingest and lint. -->
+
+Read but unprocessed (highlights pulled, no take yet):
+
+- [[2025-menon-vert]]
+
+Not yet opened:
+
+- [[2026-wu-codev-sva]]
 
 ## Papers
 

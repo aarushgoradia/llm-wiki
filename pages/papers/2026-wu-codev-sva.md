@@ -4,8 +4,9 @@ authors: [Yutong Wu, Chenrui Cao, Pengwei Jin, Di Huang, Rui Zhang, Xishan Zhang
 venue: ""
 year: 2026
 arxiv_id: "2603.14239"
+citekey: "wu2026"
 tags: [hardware, benchmark, nlp, training, systems]
-status: read
+status: read-pending-take
 ---
 
 ## Summary

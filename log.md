@@ -1,5 +1,13 @@
 # Wiki Log
 
+## [2026-06-11] update | wu2026 backfill, legacy PDFs staged, status migration
+
+- Backfilled `citekey: "wu2026"` into [[2026-wu-codev-sva]] frontmatter (was missing)
+- Staged legacy PDFs: `raw/papers/QiMeng-CodeV-SVA.pdf` (wu2026 mirror) and `raw/papers/VERT_paper.pdf` (menon2025a mirror)
+- Status migration: [[2025-menon-vert]] and [[2026-wu-codev-sva]] both promoted from `read` → `read-pending-take` (empty My Take sections confirmed)
+- Rebuilt index.md "Needs Your Take" section: VERT in "read but unprocessed" (highlights present), wu2026 in "not yet opened" (no highlights)
+- Lint: Zotero coverage clean (no "IN ZOTERO, NOT INGESTED"); mirror gaps show `menon2025a` and `wu2026` but these are legacy-named copies (`VERT_paper.pdf`, `QiMeng-CodeV-SVA.pdf`) — not real gaps per §12; missing-citekey warnings now clear
+
 ## [2026-06-11] update | Zotero integration — annotations pipeline, citekeys, library.bib
 
 - Added pull_annotations.py (Zotero local API + Better BibTeX → markdown highlights)

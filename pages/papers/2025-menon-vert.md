@@ -6,7 +6,7 @@ year: 2025
 arxiv_id: "2503.08923"
 citekey: "menon2025a"
 tags: [hardware, benchmark, nlp, training]
-status: read
+status: read-pending-take
 ---
 
 ## Summary
