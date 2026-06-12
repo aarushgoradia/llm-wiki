@@ -1,0 +1,27 @@
+@misc{menon2025a,
+  title = {Enhancing {{Large Language Models}} for {{Hardware Verification}}: {{A Novel SystemVerilog Assertion Dataset}}},
+  shorttitle = {Enhancing {{Large Language Models}} for {{Hardware Verification}}},
+  author = {Menon, Anand and Miftah, Samit S and Kundu, Shamik and Kundu, Souvik and Srivastava, Amisha and Raha, Arnab and Sonnenschein, Gabriel Theodor and Banerjee, Suvadeep and Mathaikutty, Deepak and Basu, Kanad},
+  year = 2025,
+  publisher = {arXiv},
+  doi = {10.48550/ARXIV.2503.08923},
+  urldate = {2026-06-11},
+  abstract = {Hardware verification is crucial in modern SoC design, consuming around 70\% of development time. SystemVerilog assertions ensure correct functionality. However, existing industrial practices rely on manual efforts for assertion generation, which becomes increasingly untenable as hardware systems become complex. Recent research shows that Large Language Models (LLMs) can automate this process. However, proprietary SOTA models like GPT-4o often generate inaccurate assertions and require expensive licenses, while smaller open-source LLMs need fine-tuning to manage HDL code complexities. To address these issues, we introduce **VERT**, an open-source dataset designed to enhance SystemVerilog assertion generation using LLMs. VERT enables researchers in academia and industry to fine-tune open-source models, outperforming larger proprietary ones in both accuracy and efficiency while ensuring data privacy through local fine-tuning and eliminating costly licenses. The dataset is curated by systematically augmenting variables from open-source HDL repositories to generate synthetic code snippets paired with corresponding assertions. Experimental results demonstrate that fine-tuned models like Deepseek Coder 6.7B and Llama 3.1 8B outperform GPT-4o, achieving up to 96.88\% improvement over base models and 24.14\% over GPT-4o on platforms including OpenTitan, CVA6, OpenPiton and Pulpissimo. VERT is available at https://github.com/AnandMenon12/VERT.},
+  copyright = {Creative Commons Attribution 4.0 International},
+  keywords = {Cryptography and Security (cs.CR),FOS: Computer and information sciences,Machine Learning (cs.LG),Programming Languages (cs.PL)},
+  file = {/Users/aarushgoradia/Zotero/storage/IHGGUJLM/Menon et al. - 2025 - Enhancing Large Language Models for Hardware Verification A Novel SystemVerilog Assertion Dataset.pdf}
+}
+
+@misc{wu2026,
+  title = {{{QiMeng-CodeV-SVA}}: {{Training Specialized LLMs}} for {{Hardware Assertion Generation}} via {{RTL-Grounded Bidirectional Data Synthesis}}},
+  shorttitle = {{{QiMeng-CodeV-SVA}}},
+  author = {Wu, Yutong and Cao, Chenrui and Jin, Pengwei and Huang, Di and Zhang, Rui and Zhang, Xishan and Du, Zidong and Guo, Qi and Hu, Xing},
+  year = 2026,
+  publisher = {arXiv},
+  doi = {10.48550/ARXIV.2603.14239},
+  urldate = {2026-06-11},
+  abstract = {SystemVerilog Assertions (SVAs) are crucial for hardware verification. Recent studies leverage general-purpose LLMs to translate natural language properties to SVAs (NL2SVA), but they perform poorly due to limited data. We propose a data synthesis framework to tackle two challenges: the scarcity of high-quality real-world SVA corpora and the lack of reliable methods to determine NL-SVA semantic equivalence. For the former, large-scale open-source RTLs are used to guide LLMs to generate real-world SVAs; for the latter, bidirectional translation serves as a data selection method. With the synthesized data, we train CodeV-SVA, a series of SVA generation models. Notably, CodeV-SVA-14B achieves 75.8\% on NL2SVA-Human and 84.0\% on NL2SVA-Machine in Func.@1, matching or exceeding advanced LLMs like GPT-5 and DeepSeek-R1.},
+  copyright = {Creative Commons Attribution Non Commercial Share Alike 4.0 International},
+  keywords = {Artificial Intelligence (cs.AI),Computation and Language (cs.CL),FOS: Computer and information sciences,Hardware Architecture (cs.AR),Machine Learning (cs.LG)},
+  file = {/Users/aarushgoradia/Zotero/storage/Y7EKWCSP/Wu et al. - 2026 - QiMeng-CodeV-SVA Training Specialized LLMs for Hardware Assertion Generation via RTL-Grounded Bidir.pdf}
+}

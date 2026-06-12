@@ -4,6 +4,7 @@ authors: [Anand Menon, Samit S Miftah, Shamik Kundu, Souvik Kundu, Amisha Srivas
 venue: ""
 year: 2025
 arxiv_id: "2503.08923"
+citekey: "menon2025a"
 tags: [hardware, benchmark, nlp, training]
 status: read
 ---
@@ -55,6 +56,20 @@ VERT is a 20,000-sample open-source dataset of (RTL snippet, SystemVerilog Asser
 | Cleaned vars | 94.21 |
 
 Variable cleanliness dominates. Training on bad names is worse than not fine-tuning at all.
+
+## Highlights
+
+<!-- MACHINE-MAINTAINED, HUMAN-SOURCED — verbatim Zotero annotations via pull_annotations.py only; replaced wholesale on re-pull; never summarized, paraphrased, or authored by Claude (§6) -->
+
+> open-source LLMs to outperform models like GPT-4o (p.2)
+
+*GPT-4o is an old model that fundamentally performs much worse than 5.5 or Claude Opus/Fable models. Additionally, GPT-o3 existed when this paper was written, so they should've used it.*
+
+> mutation testing, formal verification, and simulation-based analysis (p.3)
+
+> Relation Representation for Nested Conditional Blocks in GPT-4o Outputs. (p.7)
+
+*Very local use case. Not using RTL that is varied and used in real industry chips*
 
 ## Limitations
 

@@ -8,7 +8,7 @@ This file governs how Claude Code maintains this wiki. Read it in full at the st
 
 **Owner:** Aarush Goradia — ECE student and ML researcher (Princeton, interning at Qualcomm).  
 **Domain:** ML, AI, computer architecture, hardware acceleration, and systems papers.  
-**Stack:** Obsidian (reading), Claude Code (writing/maintaining), `rg` (search), `resolve_citation.py` (arXiv/Semantic Scholar metadata), `git` (version history).
+**Stack:** Obsidian (reading), Zotero 7 + Better BibTeX (reference manager, PDF storage/sync, annotations), Claude Code (writing/maintaining), `rg` (search), `resolve_citation.py` (arXiv/Semantic Scholar metadata), `pull_annotations.py` (Zotero annotations → markdown), `git` (version history).
 
 The wiki is a persistent, compounding artifact. Every ingest, query, and lint pass should leave it more connected and more accurate than before. Never let a session end in a degraded state.
 
@@ -23,9 +23,12 @@ wiki/
 ├── log.md                     ← append-only chronological record
 ├── research-agenda.md         ← open questions (see §11)
 ├── reading-queue.md           ← uncovered references ranked by citation count (see §7.2 step 2, §9)
+├── library.bib                ← Better BibTeX auto-export of the Zotero "wiki" collection (ground truth, see §2.1)
 ├── scratchpad.md              ← ephemeral working notes, never committed
+├── resolve_citation.py        ← arXiv/Semantic Scholar metadata + citation graph (--graph)
+├── pull_annotations.py        ← Zotero annotations → markdown for ## Highlights
 ├── raw/
-│   └── papers/                ← immutable source PDFs, never modify
+│   └── papers/                ← wiki-side PDF mirror; existing files immutable (see §2.1)
 └── pages/
     ├── papers/                ← one page per paper
     ├── people/                ← one page per author (threshold: 3+ appearances)
@@ -34,7 +37,19 @@ wiki/
     └── syntheses/             ← filed answers to non-trivial queries
 ```
 
-**Never modify files in `raw/`.** Everything else under `pages/` is owned and maintained by Claude Code.
+**Never modify or overwrite existing files in `raw/`.** The only permitted write is copying a *new* PDF into `raw/papers/` during ingest (§2.1, §7.2 step 4). Everything under `pages/` is owned and maintained by Claude Code.
+
+### 2.1 Zotero Architecture and Data Flow
+
+Zotero 7 (with Better BibTeX) is the system of record for papers and PDFs. Future sessions must understand this flow before touching anything:
+
+- **Zotero owns the PDFs.** Wiki papers' PDFs are *stored* attachments in Zotero, synced via Zotero storage. Aarush reads and annotates on iPad; annotations sync back into the Zotero database.
+- **Citekeys** follow the Better BibTeX formula `auth.lower + year` (e.g. `vaswani2017`). The citekey is the join key between Zotero, `library.bib`, and paper-page frontmatter.
+- **The Zotero collection named `wiki` is the canonical set.** A paper is wiki-tracked iff it is in that collection. The full Zotero library contains many unrelated papers — never compare against it; all lint and coverage checks use the wiki collection / `library.bib` only.
+- **`library.bib` is ground truth** for which papers are wiki-tracked. Better BibTeX auto-export ("keep updated") writes the wiki collection to it; treat it as read-only.
+- **`raw/papers/` is a wiki-side mirror and archive, NOT Zotero's source.** During ingest, locate the attachment's file path via the local API and copy the PDF to `raw/papers/<citekey>.pdf` if no copy exists there yet (older files predate this convention and keep their legacy names). Never create Zotero links into `raw/`; never modify or overwrite files already present there.
+- **Local API:** `localhost:23119`, available only while Zotero is running. Scripts fail fast with a clear error and nonzero exit when it isn't — relay that error and stop; do not work around it.
+- **Promotion ritual:** Aarush drags an item into the `wiki` collection, then asks for an ingest. Items not yet in the collection are not wiki business.
 
 ---
 
@@ -77,6 +92,7 @@ authors: []
 venue: ""
 year: YYYY
 arxiv_id: ""
+citekey: ""
 tags: []
 status: unread
 ---
@@ -101,6 +117,10 @@ Every extracted number must carry a source anchor giving the page and table/figu
 came from, e.g. "2.9x speedup over baseline (p.7, Table 3)". A number without an anchor
 is not spot-checkable without re-reading the PDF and does not belong in this section.
 This applies to numbers in prose and tables as well as bullets.
+
+## Highlights
+
+<!-- MACHINE-MAINTAINED, HUMAN-SOURCED — verbatim Zotero annotations via pull_annotations.py only; replaced wholesale on re-pull; never summarized, paraphrased, or authored by Claude (§6) -->
 
 ## Limitations
 
@@ -130,6 +150,8 @@ Questions this paper raises that are not answered here. These are copied to rese
 **`status` values:** `unread` (page created but PDF not read), `reading` (in progress), `read-pending-take` (fully processed by Claude; awaiting the human's My Take), `read` (fully processed **and** My Take written), `reference` (skimmed for citations only, not fully ingested).
 
 `read-pending-take` is the terminal status for an ingest — Claude never sets `read`. Only the human promotes a page to `read`, after writing its My Take. Claude never writes My Take content (§6); its only job here is to surface pending pages in the "Needs Your Take" section of index.md (§9), refreshed on every ingest and lint.
+
+**`citekey`** is the Better BibTeX citekey from `library.bib` (§2.1). It may be legitimately empty only for papers not in Zotero (typically `status: reference`); for everything else, fill it at ingest or backfill it during lint.
 
 **`tags` vocabulary** (use only from this list; add new terms to the list here when genuinely needed):
 `architecture`, `attention`, `training`, `inference`, `quantization`, `pruning`, `distillation`, `efficient-inference`, `hardware`, `accelerator`, `memory`, `compilers`, `computer-vision`, `nlp`, `multimodal`, `rl`, `theory`, `benchmark`, `survey`, `systems`, `dataflow`, `sparsity`, `energy-efficiency`, `kv-cache`, `verification`.
@@ -270,6 +292,14 @@ The following sections are **owned by the human and must never be modified**:
 - Leave them exactly as you find them — blank or populated.
 - If these sections are missing from an existing page, add the headers only (no content). Do not populate them.
 
+### Machine-maintained, human-sourced: `## Highlights`
+
+`## Highlights` on paper pages is a third ownership category. Claude writes to it, but the *content* belongs to the human: it holds only Aarush's verbatim Zotero annotations, as printed by `pull_annotations.py`. Rules:
+
+- Populate it only by pasting `pull_annotations.py` output unchanged. Never summarize, paraphrase, reorder, trim, or author content here — not even to fix typos in a highlight.
+- Annotations grow over time. Re-running `pull_annotations.py` on an already-ingested paper **replaces the section wholesale** with the fresh output; that replacement is the one permitted modification.
+- If the script reports zero annotations, leave the section empty (header and ownership comment only).
+
 ---
 
 ## 7. Ingest Workflow
@@ -286,37 +316,42 @@ next paper.
 
 Run this checklist in order for every paper. Do not skip steps.
 
-1. **Resolve metadata.** Run `python3 resolve_citation.py "<title>"` from the wiki root. If the paper is not found and you have the PDF, extract title/authors/year/venue manually.
+1. **Resolve metadata.** Primary source is Zotero: for items in the `wiki` collection, take title/authors/year/venue/arxiv_id/citekey from `library.bib` and the local API (§2.1). Fall back to `python3 resolve_citation.py "<title>"` for papers not in Zotero (these get an empty citekey). If neither resolves and you have the PDF, extract metadata manually.
 
 2. **Map the citation graph.** Pull the paper's reference list and citing papers from Semantic Scholar via `python3 resolve_citation.py --graph "<title>"`. Cross-reference each reference against `pages/papers/` (match on title and `arxiv_id`, as in step 3). Record coverage for the log entry, e.g. "4 of 11 references already in wiki". For each reference **not** in the wiki, update `reading-queue.md` (format in §9): add a line if the paper is not yet listed, increment its cited-by count if it is, then re-sort by count descending. If the Semantic Scholar graph endpoints are unavailable, note that in the log entry and continue — do not block the ingest.
 
-3. **Check for duplicates.** Check both identifiers:
-   - arXiv ID: `rg -l "<arxiv-id>" pages/papers/`
-   - Title: `rg -il "<title>" pages/papers/`. Title matching must be case- **and punctuation-insensitive**: `rg -i` handles case but not punctuation, so if the title contains punctuation, search for a distinctive punctuation-free substring instead, and compare candidates after lowercasing and stripping punctuation from both sides.
+3. **Check for duplicates.** Frontmatter identifiers first, titles as fallback:
+   - Citekey: `rg -l "^citekey: \"<citekey>\"" pages/papers/`
+   - arXiv ID: `rg -l "^arxiv_id: \"<arxiv-id>\"" pages/papers/`
+   - Title (fallback, for pages predating these fields or papers without them): `rg -il "<title>" pages/papers/`. Title matching must be case- **and punctuation-insensitive**: `rg -i` handles case but not punctuation, so if the title contains punctuation, search for a distinctive punctuation-free substring instead, and compare candidates after lowercasing and stripping punctuation from both sides.
 
-   If either check hits, update the existing page rather than creating a new one.
+   If any check hits, update the existing page rather than creating a new one.
 
-4. **Read the source.** Read the PDF from `raw/papers/`. Read it in full; do not skim unless `status: reference` is intended.
+4. **Mirror the PDF into `raw/papers/`.** Locate the stored attachment's file path via the local API (`item.attachments` over Better BibTeX JSON-RPC, or the attachment item's path). If `raw/papers/` has no copy of this paper, copy the PDF to `raw/papers/<citekey>.pdf` and stage it in this paper's ingest commit. Never overwrite anything already in `raw/papers/` — if a copy exists (including under a legacy name), leave it untouched. This copy is the wiki's archive; Zotero remains the source (§2.1).
 
-5. **Create the paper page.** Write `pages/papers/YYYY-<author>-<slug>.md` using the template in §5.1. Fill every frontmatter field. Set `status: read-pending-take` (never `read` — see §5.1).
+5. **Read the source.** Read the PDF from `raw/papers/`. Read it in full; do not skim unless `status: reference` is intended.
 
-6. **Create or update system pages.** For every named model, dataset, benchmark, or hardware component mentioned: check `rg -l "<name>" pages/systems/`. Create the page if it does not exist. Append to "Papers Using This System" if it does.
+6. **Create the paper page.** Write `pages/papers/YYYY-<author>-<slug>.md` using the template in §5.1. Fill every frontmatter field, including `citekey`. Set `status: read-pending-take` (never `read` — see §5.1).
 
-7. **Check concept thresholds.** For every significant concept introduced or used: run `rg -c "<concept>" pages/`. The count from `rg -c` is a **heuristic upper bound**, not the answer — it counts raw string matches. Before creating a concept page, inspect the matches with `rg -n "<concept>" pages/` and count only substantive mentions (a paragraph explaining or applying the idea). WikiLinks, citations, tag lines, and index/log entries are not substantive. Create the page only if substantive mentions ≥ 2 and no page exists.
+7. **Pull annotations.** Run `python3 pull_annotations.py <citekey>` and paste the output verbatim into the page's `## Highlights` section (§6). If it reports zero annotations, leave the section empty. When re-running on an already-ingested paper, replace the entire section with the fresh output. Skip this step (empty section) for papers with no citekey.
 
-8. **Check author thresholds.** For every author on this paper: run `rg -l "<last name>" pages/papers/`. Count appearances. If ≥3 and no person page exists, create one. If a person page exists, append this paper to "Papers in This Wiki."
+8. **Create or update system pages.** For every named model, dataset, benchmark, or hardware component mentioned: check `rg -l "<name>" pages/systems/`. Create the page if it does not exist. Append to "Papers Using This System" if it does.
 
-9. **Update connections.** Add `[[WikiLinks]]` to the new paper page pointing at related pages. Add a back-link from each of those pages pointing at the new paper page in their "Connections" or "Key Papers" section.
+9. **Check concept thresholds.** For every significant concept introduced or used: run `rg -c "<concept>" pages/`. The count from `rg -c` is a **heuristic upper bound**, not the answer — it counts raw string matches. Before creating a concept page, inspect the matches with `rg -n "<concept>" pages/` and count only substantive mentions (a paragraph explaining or applying the idea). WikiLinks, citations, tag lines, and index/log entries are not substantive. Create the page only if substantive mentions ≥ 2 and no page exists.
 
-10. **Check for contradictions.** Compare the paper's claims against related pages. Apply the contradiction rules in §8.
+10. **Check author thresholds.** For every author on this paper: run `rg -l "<last name>" pages/papers/`. Count appearances. If ≥3 and no person page exists, create one. If a person page exists, append this paper to "Papers in This Wiki."
 
-11. **Append to research-agenda.md.** Copy the paper's "Open Questions" items to `research-agenda.md` using the format and dedupe rule in §11.
+11. **Update connections.** Add `[[WikiLinks]]` to the new paper page pointing at related pages. Add a back-link from each of those pages pointing at the new paper page in their "Connections" or "Key Papers" section.
 
-12. **Update index.md.** Add the new paper (and any new people/concepts/systems pages) to the appropriate section using the format in §9. Refresh the "Needs Your Take" section from `rg -l "^status: read-pending-take" pages/`.
+12. **Check for contradictions.** Compare the paper's claims against related pages. Apply the contradiction rules in §8.
 
-13. **Append to log.md.** Use the format in §9. Include the citation-graph coverage line from step 2.
+13. **Append to research-agenda.md.** Copy the paper's "Open Questions" items to `research-agenda.md` using the format and dedupe rule in §11.
 
-14. **Commit.** Follow §14.
+14. **Update index.md.** Add the new paper (and any new people/concepts/systems pages) to the appropriate section using the format in §9. Refresh the "Needs Your Take" section from `rg -l "^status: read-pending-take" pages/`.
+
+15. **Append to log.md.** Use the format in §9. Include the citation-graph coverage line from step 2.
+
+16. **Commit.** Follow §14. Remember to stage the mirrored PDF from step 4 if one was copied.
 
 ---
 
@@ -360,7 +395,7 @@ When uncertain which tier applies, default to Disputed. Never silently leave a c
 
 Keep sections in this order: Needs Your Take, Papers, People, Concepts, Systems, Syntheses. Within each section, sort by year descending (papers/syntheses) or alphabetically (people/concepts/systems). Update on every ingest, synthesis creation, and lint pass.
 
-"Needs Your Take" lists every page with `status: read-pending-take`. Regenerate it from `rg -l "^status: read-pending-take" pages/` on every ingest and lint — remove pages the human has promoted to `read`, add newly ingested ones. Claude only maintains this list; it never writes the My Take content itself (§6).
+"Needs Your Take" lists every page with `status: read-pending-take`, split into two categories: **read but unprocessed** (Highlights populated — Aarush has annotated the paper in Zotero but not written a take; §12 check 11) and **not yet opened** (no highlights pulled). Regenerate it from `rg -l "^status: read-pending-take" pages/` on every ingest and lint — remove pages the human has promoted to `read`, add newly ingested ones. Omit a category when it is empty. Claude only maintains this list; it never writes the My Take content itself (§6).
 
 ```markdown
 # Wiki Index
@@ -370,6 +405,12 @@ _Last updated: YYYY-MM-DD_
 ## Needs Your Take
 
 <!-- Pages awaiting the human's My Take. Auto-refreshed on every ingest and lint. -->
+
+Read but unprocessed (highlights pulled, no take yet):
+
+- [[2022-dao-flashattention]]
+
+Not yet opened:
 
 - [[2017-vaswani-attention-is-all-you-need]]
 
@@ -483,10 +524,39 @@ Run lint when asked, or proactively after ingesting 5+ papers in a session. Work
    awk '/^## Results/{r=1; next} /^## /{r=0} r && /^- / && /[0-9]/ && !/\(p\.[0-9]+[^)]*\)/ {print FILENAME ": " $0}' pages/papers/*.md
    ```
    This catches bullet lines only; numbers in Results prose and tables also require anchors — check those by eye while fixing the flagged bullets.
-8. **Needs Your Take refresh.** Regenerate index.md's "Needs Your Take" section from `rg -l "^status: read-pending-take" pages/` (§9).
-9. **research-agenda.md harvest.** Mark resolved open questions `[x]` as described in §11. Add new open questions surfaced during the lint pass (dedupe per §11).
-10. **index.md freshness.** Verify every page under `pages/` appears in index.md.
-11. Append a `lint` entry to log.md summarizing what was found and fixed.
+8. **Needs Your Take refresh.** Regenerate index.md's "Needs Your Take" section from `rg -l "^status: read-pending-take" pages/`, split into its two categories (§9) using check 11's results.
+9. **Zotero coverage ("in Zotero, not ingested").** Every citekey in library.bib should have a paper page:
+   ```bash
+   rg -o '^@\w+\{([^,]+),' -r '$1' library.bib | while read -r ck; do
+     rg -q "^citekey: \"$ck\"" pages/papers/ || echo "IN ZOTERO, NOT INGESTED: $ck"
+   done
+   ```
+   Report these; they are ingest candidates, not lint fixes. Never run this against the full Zotero library — library.bib (the wiki collection) only (§2.1).
+10. **Missing citekeys.** Pages whose frontmatter lacks a citekey or has an empty one:
+    ```bash
+    for f in pages/papers/*.md; do
+      rg -q '^citekey: "..*"' "$f" || echo "NO CITEKEY (warning): $f"
+    done
+    ```
+    This is a **warning, not an error** — backfill from library.bib where the paper is wiki-tracked; for `status: reference` pages (often not in Zotero) the warning is expected and acceptable.
+11. **Read but unprocessed.** Pages with populated Highlights but an empty My Take — Aarush has annotated the paper but not yet processed it. Report these in "Needs Your Take" under "read but unprocessed," distinct from never-opened pages (§9):
+    ```bash
+    for f in pages/papers/*.md; do
+      h=$(awk '/^## Highlights/{r=1;next} /^## /{r=0} r && NF && !/^<!--/' "$f")
+      t=$(awk '/^## My Take/{r=1;next} /^## /{r=0} r && NF && !/^<!--/' "$f")
+      [ -n "$h" ] && [ -z "$t" ] && echo "READ BUT UNPROCESSED: $f"
+    done
+    ```
+12. **PDF mirror gaps.** Wiki-collection papers whose PDF is missing from `raw/papers/`:
+    ```bash
+    rg -o '^@\w+\{([^,]+),' -r '$1' library.bib | while read -r ck; do
+      [ -f "raw/papers/$ck.pdf" ] || echo "MIRROR GAP: $ck"
+    done
+    ```
+    Before flagging, check by eye for a copy under a legacy filename (pre-citekey convention, e.g. `VERT_paper.pdf`) — those are not gaps. Real gaps are filled during that paper's next ingest/update commit (§7.2 step 4), never silently.
+13. **research-agenda.md harvest.** Mark resolved open questions `[x]` as described in §11. Add new open questions surfaced during the lint pass (dedupe per §11).
+14. **index.md freshness.** Verify every page under `pages/` appears in index.md.
+15. Append a `lint` entry to log.md summarizing what was found and fixed.
 
 ---
 
@@ -503,11 +573,17 @@ All search uses `rg` (ripgrep). The wiki root is the working directory.
 | Search only papers | `rg -l "<term>" pages/papers/` |
 | Find pages with missing field | `rg -l "^<field>: \"\"" pages/` |
 
-For metadata lookup, always use `resolve_citation.py` before reading the PDF:
+For metadata, Zotero/library.bib is primary for wiki-tracked papers (§2.1, §7.2 step 1). For papers not in Zotero, fall back to:
 ```bash
 python3 resolve_citation.py "<paper title>"
 ```
 This queries Semantic Scholar first, falls back to arXiv. If both fail, extract metadata from the PDF manually.
+
+For annotations (requires Zotero running):
+```bash
+python3 pull_annotations.py <citekey>
+```
+Prints highlights as blockquotes with page numbers and comments in italics, in document order — paste verbatim into `## Highlights` (§6). Exits nonzero with a clear message if Zotero is not running or the citekey is unknown; warns but proceeds if the item is outside the `wiki` collection; says so explicitly when there are zero annotations.
 
 ---
 
@@ -534,10 +610,12 @@ Do not push unless explicitly asked.
 
 These rules have no exceptions:
 
-- **Never modify `raw/`.** Source files are immutable.
+- **Never modify or overwrite an existing file in `raw/`.** The only permitted write is copying a *new* PDF into `raw/papers/` during ingest (§7.2 step 4); once a file is there, it is immutable.
 - **Never overwrite `## My Take` or `## My Notes`.** Human-owned. Treat as read-only.
+- **Never write non-verbatim content into `## Highlights`.** Only unedited `pull_annotations.py` output goes there; wholesale replacement on re-pull is the one permitted modification (§6).
+- **Never compare against the full Zotero library.** The wiki collection / library.bib is the only Zotero scope for lint, coverage, and ingest decisions (§2.1).
 - **Never set `status: read` or write My Take content.** Ingest ends at `read-pending-take`; only the human promotes a page to `read`.
 - **Never commit `scratchpad.md`.** It is ephemeral.
 - **Never leave a contradiction unflagged.** Classify and mark it before the session ends.
 - **Always update index.md and log.md** as part of every ingest, synthesis, and lint operation, **and reading-queue.md** as part of every ingest. These are not optional cleanup steps.
-- **Always resolve metadata via `resolve_citation.py`** before reading a PDF. Do not manually guess venue or year when the script can retrieve them.
+- **Always resolve metadata before reading a PDF** — from Zotero/library.bib for wiki-tracked papers, via `resolve_citation.py` otherwise. Do not manually guess venue or year when they can be retrieved.
