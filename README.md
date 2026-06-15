@@ -1,6 +1,6 @@
 # Research Wiki
 
-A Claude Code–maintained research wiki for ML/AI/systems papers. Obsidian for reading, Zotero for reference management, Claude Code for ingesting and maintaining all wiki content.
+A Claude Code–maintained research wiki for Comp Arch/ML/systems papers. Zotero for reading papers and reference management, Obsidian for storing notes and reading markdown, and Claude Code for ingesting and maintaining all wiki content.
 
 The pages here are my own notes — fork the repo and replace them with yours.
 
@@ -11,8 +11,8 @@ The pages here are my own notes — fork the repo and replace them with yours.
 **Prerequisites**
 
 - [Claude Code](https://claude.ai/code) (CLI or desktop app)
-- [Zotero 8](https://www.zotero.org/) with the [Better BibTeX](https://retorque.re/zotero-better-bibtex/) plugin
-- [Obsidian](https://obsidian.md/) (optional — for reading the markdown)
+- [Zotero 9](https://www.zotero.org/) with the [Better BibTeX](https://retorque.re/zotero-better-bibtex/) plugin
+- [Obsidian](https://obsidian.md/)
 - `ripgrep` (`brew install ripgrep` / `apt install ripgrep`)
 - Python 3 with `requests` (`pip install requests`)
 
@@ -27,7 +27,7 @@ The pages here are my own notes — fork the repo and replace them with yours.
 
 That's it. Claude Code handles page creation, citation graph mapping, cross-linking, and index/log maintenance according to the rules in `CLAUDE.md`.
 
-**Zotero local API note**: `pull_annotations.py` (which pulls your Zotero highlights into pages) requires Zotero to be running. The script exits with a clear error if it isn't — just start Zotero and re-run the ingest.
+**Zotero local API note**: `pull_annotations.py` requires the Zotero local API enabled and Zotero running. To enable it: Zotero → Settings → Advanced → "Allow other applications on this computer to communicate with Zotero." The script exits with a clear error if Zotero isn't running — just start it and re-run the ingest.
 
 ---
 

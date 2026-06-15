@@ -8,7 +8,7 @@ This file governs how Claude Code maintains this wiki. Read it in full at the st
 
 **Owner:** Aarush Goradia — ECE student and ML researcher (Princeton, interning at Qualcomm).  
 **Domain:** ML, AI, computer architecture, hardware acceleration, and systems papers.  
-**Stack:** Obsidian (reading), Zotero 8 + Better BibTeX (reference manager, PDF storage/sync, annotations), Claude Code (writing/maintaining), `rg` (search), `resolve_citation.py` (arXiv/Semantic Scholar metadata), `pull_annotations.py` (Zotero annotations → markdown), `git` (version history).
+**Stack:** Obsidian (reading), Zotero 9 + Better BibTeX (reference manager, PDF storage/sync, annotations), Claude Code (writing/maintaining), `rg` (search), `resolve_citation.py` (arXiv/Semantic Scholar metadata), `pull_annotations.py` (Zotero annotations → markdown), `git` (version history).
 
 The wiki is a persistent, compounding artifact. Every ingest, query, and lint pass should leave it more connected and more accurate than before. Never let a session end in a degraded state.
 
@@ -43,7 +43,7 @@ wiki/
 
 ### 2.1 Zotero Architecture and Data Flow
 
-Zotero 8 (with Better BibTeX) is the system of record for papers and PDFs. Future sessions must understand this flow before touching anything:
+Zotero 9 (with Better BibTeX) is the system of record for papers and PDFs. Future sessions must understand this flow before touching anything:
 
 - **Zotero owns the PDFs.** Wiki papers' PDFs are *stored* attachments in Zotero, synced via Zotero storage. Aarush reads and annotates on iPad; annotations sync back into the Zotero database.
 - **Citekeys** follow the Better BibTeX formula `auth.lower + year` (e.g. `vaswani2017`). The citekey is the join key between Zotero, `library.bib`, and paper-page frontmatter.
