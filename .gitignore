@@ -1,5 +1,7 @@
 raw/assets/
+raw/papers/*.pdf
 .venv/
 .DS_Store
 *.env
 __pycache__/
+scratchpad.md
