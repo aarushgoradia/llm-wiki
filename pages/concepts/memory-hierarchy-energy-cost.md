@@ -23,6 +23,7 @@ Measured evidence for the premise from Eyeriss silicon: ALUs account for <10% of
 - [[dataflow]] — the policy space this cost model evaluates.
 - [[no-local-reuse]] — the design point that bets on buffer capacity instead of access locality.
 - [[row-stationary]] — the design point that bets on locality via distributed spads.
+- [[operational-intensity]] / [[roofline-model]] — the throughput-side mirror of this energy argument: the reuse that cuts off-chip *access energy* here is the same reuse that raises operational intensity and cuts off-chip *bandwidth time* in [[2009-williams-roofline]].
 
 ## Open Questions
 

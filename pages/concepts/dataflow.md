@@ -25,6 +25,7 @@ The dataflow also dictates the interconnect: delivery patterns (multicast of sha
 - [[no-local-reuse]] — nothing pinned; trades PE storage for maximal global buffer.
 - [[row-stationary]] — 1-D convolution row primitives pinned; co-optimizes all data types.
 - [[memory-hierarchy-energy-cost]] — the cost model that makes dataflow choice matter.
+- [[operational-intensity]] — maximizing on-chip reuse (the point of a dataflow) raises operational intensity, sliding a kernel rightward under the [[roofline-model]] toward compute-bound ([[2009-williams-roofline]]).
 
 ## Open Questions
 

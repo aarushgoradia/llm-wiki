@@ -191,6 +191,7 @@ graph TD
 - [[vgg-16]] — second measured benchmark (13 CONV layers).
 - [[imagenet]] — the 1000-class task both benchmark CNNs target.
 - [[caffe]] — framework Eyeriss was integrated into for the live demo system.
+- [[2009-williams-roofline]] — Roofline is the throughput-side analytical frame for why minimizing off-chip DRAM traffic (this paper's energy argument via [[memory-hierarchy-energy-cost]]) matters; reuse here = higher [[operational-intensity]] there.
 
 ## Open Questions
 

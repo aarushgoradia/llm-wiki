@@ -14,6 +14,9 @@
 - [ ] With 16–78% of filter weights prunable to zero, how much additional DRAM-access reduction would weight-side compression deliver on top of fmap-only RLC? — *from [[2017-chen-eyeriss]], 2026-06-11*
 - [ ] Eyeriss claims DRAM traffic can be fully overlapped with processing "at negligible cost" — what control changes does that actually require, and does it hold for VGG-scale fmaps where ramp-up dominates? — *from [[2017-chen-eyeriss]], 2026-06-11*
 - [ ] Which of RS's assumptions about reuse structure (convolutional weight/input/psum reuse) break for attention workloads, and what replaces the dataflow argument there? — *from [[2017-chen-eyeriss]], 2026-06-11*
+- [ ] Can performance counters automatically set ceiling heights and reorder them per kernel, turning Roofline from a static guide into a measured, kernel-specific one (the paper's own Appendix A.3 direction)? — *from [[2009-williams-roofline]], 2026-06-15*
+- [ ] Does Roofline extend usefully to GPUs and vector processors, and to non-floating-point metrics (sorts/sec, frames/sec) and other traffic axes (L2/L3, I/O bandwidth)? — *from [[2009-williams-roofline]], 2026-06-15*
+- [ ] Is the ridge point a robust predictor of programming productivity beyond these four kernels and four machines? — *from [[2009-williams-roofline]], 2026-06-15*
 
 ## My Hunches
 <!-- HUMAN-OWNED — never touch this section -->

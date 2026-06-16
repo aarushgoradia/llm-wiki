@@ -58,3 +58,16 @@
 - No contradictions with existing pages (SVA cluster is disjoint); no VERT/CodeV-SVA connection forced — paper is deliberately sparsely connected as the first node of the accelerator cluster
 - No person pages (all four authors at 1 wiki paper, threshold 3)
 - Added 4 open questions to research-agenda.md, including the seeded attention-workload dataflow question
+
+## [2026-06-15] ingest | Roofline: An Insightful Visual Performance Model for Multicore Architectures
+
+- Created [[2009-williams-roofline]] (paper, status read-pending-take, citekey williams2009, CACM 2009)
+- Created concepts [[roofline-model]] and [[operational-intensity]] — foundational model + its x-axis metric; both bridge to the existing dataflow/[[memory-hierarchy-energy-cost]] cluster (reuse ↔ operational intensity ↔ DRAM-traffic energy)
+- Created systems [[intel-xeon]], [[amd-opteron]], [[sun-ultrasparc-t2]], [[ibm-cell]] (hardware eval machines), [[stream]] (benchmark), [[fftw]] (framework), [[seven-dwarfs]] (benchmark/taxonomy). Skipped PARSEC/SPLASH-2 — only name-dropped as suites the authors declined to use.
+- Citation graph: Semantic Scholar references endpoint returned `data: null` (publisher-elided), same failure mode as the Eyeriss ingest; could not auto-map. References are classic 2008-era systems work (Amdahl, Little's Law, STREAM, FFTW, Berkeley View) — none in this ML/accelerator wiki, so coverage is 0; reading-queue.md left unchanged.
+- Extracted Figure 1 (basic roofline + ridge point) and Figure 2 (ceilings + optimization regions) to assets/williams2009/, embedded in the paper page; staged in this commit
+- pull_annotations.py williams2009 → 0 annotations; Highlights left empty → page listed under "Not yet opened"
+- PDF already mirrored in raw/papers/ under legacy name (RooflineVyNoYellow.pdf); left untouched per §15
+- Backlinks added from [[memory-hierarchy-energy-cost]], [[dataflow]], and [[2017-chen-eyeriss]] to the new roofline/operational-intensity pages
+- No contradictions (Roofline is orthogonal/foundational to existing pages); no person pages (all three authors at 1 wiki paper, threshold 3)
+- Added 3 open questions to research-agenda.md (auto ceilings, GPU/non-FP generalization, ridge-point-as-productivity-predictor)
