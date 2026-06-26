@@ -15,6 +15,56 @@
   file = {/Users/aarushgoradia/Zotero/storage/B23G95B7/Chen et al. - 2017 - Eyeriss An Energy-Efficient Reconfigurable Accelerator for Deep Convolutional Neural Networks.pdf}
 }
 
+@misc{chen2019,
+  title = {Eyeriss v2: {{A Flexible Accelerator}} for {{Emerging Deep Neural Networks}} on {{Mobile Devices}}},
+  shorttitle = {Eyeriss V2},
+  author = {Chen, Yu-Hsin and Yang, Tien-Ju and Emer, Joel and Sze, Vivienne},
+  year = 2019,
+  month = may,
+  number = {arXiv:1807.07928},
+  eprint = {1807.07928},
+  primaryclass = {cs.DC},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.1807.07928},
+  urldate = {2026-06-26},
+  abstract = {A recent trend in DNN development is to extend the reach of deep learning applications to platforms that are more resource and energy constrained, e.g., mobile devices. These endeavors aim to reduce the DNN model size and improve the hardware processing efficiency, and have resulted in DNNs that are much more compact in their structures and/or have high data sparsity. These compact or sparse models are different from the traditional large ones in that there is much more variation in their layer shapes and sizes, and often require specialized hardware to exploit sparsity for performance improvement. Thus, many DNN accelerators designed for large DNNs do not perform well on these models. In this work, we present Eyeriss v2, a DNN accelerator architecture designed for running compact and sparse DNNs. To deal with the widely varying layer shapes and sizes, it introduces a highly flexible on-chip network, called hierarchical mesh, that can adapt to the different amounts of data reuse and bandwidth requirements of different data types, which improves the utilization of the computation resources. Furthermore, Eyeriss v2 can process sparse data directly in the compressed domain for both weights and activations, and therefore is able to improve both processing speed and energy efficiency with sparse models. Overall, with sparse MobileNet, Eyeriss v2 in a 65nm CMOS process achieves a throughput of 1470.6 inferences/sec and 2560.3 inferences/J at a batch size of 1, which is 12.6x faster and 2.5x more energy efficient than the original Eyeriss running MobileNet. We also present an analysis methodology called Eyexam that provides a systematic way of understanding the performance limits for DNN processors as a function of specific characteristics of the DNN model and accelerator design; it applies these characteristics as sequential steps to increasingly tighten the bound on the performance limits.},
+  archiveprefix = {arXiv},
+  keywords = {Computer Science - Computer Vision and Pattern Recognition,Computer Science - Distributed Parallel and Cluster Computing},
+  file = {/Users/aarushgoradia/Zotero/storage/WSVAT7TA/1807.07928v2.pdf}
+}
+
+@inproceedings{horowitz2014,
+  title = {1.1 {{Computing}}'s Energy Problem (and What We Can Do about It)},
+  booktitle = {2014 {{IEEE International Solid-State Circuits Conference Digest}} of {{Technical Papers}} ({{ISSCC}})},
+  author = {Horowitz, Mark},
+  year = 2014,
+  month = feb,
+  pages = {10--14},
+  publisher = {IEEE},
+  address = {San Francisco, CA, USA},
+  doi = {10.1109/ISSCC.2014.6757323},
+  urldate = {2026-06-25},
+  isbn = {978-1-4799-0920-9 978-1-4799-0918-6},
+  file = {/Users/aarushgoradia/Zotero/storage/NE8VMW97/Horowitz - 2014 - 1.1 Computing's energy problem (and what we can do about it).pdf}
+}
+
+@misc{jouppi2017,
+  title = {In-{{Datacenter Performance Analysis}} of a {{Tensor Processing Unit}}},
+  author = {Jouppi, Norman P. and Young, Cliff and Patil, Nishant and Patterson, David and Agrawal, Gaurav and Bajwa, Raminder and Bates, Sarah and Bhatia, Suresh and Boden, Nan and Borchers, Al and Boyle, Rick and Cantin, Pierre-luc and Chao, Clifford and Clark, Chris and Coriell, Jeremy and Daley, Mike and Dau, Matt and Dean, Jeffrey and Gelb, Ben and Ghaemmaghami, Tara Vazir and Gottipati, Rajendra and Gulland, William and Hagmann, Robert and Ho, C. Richard and Hogberg, Doug and Hu, John and Hundt, Robert and Hurt, Dan and Ibarz, Julian and Jaffey, Aaron and Jaworski, Alek and Kaplan, Alexander and Khaitan, Harshit and Koch, Andy and Kumar, Naveen and Lacy, Steve and Laudon, James and Law, James and Le, Diemthu and Leary, Chris and Liu, Zhuyuan and Lucke, Kyle and Lundin, Alan and MacKean, Gordon and Maggiore, Adriana and Mahony, Maire and Miller, Kieran and Nagarajan, Rahul and Narayanaswami, Ravi and Ni, Ray and Nix, Kathy and Norrie, Thomas and Omernick, Mark and Penukonda, Narayana and Phelps, Andy and Ross, Jonathan and Ross, Matt and Salek, Amir and Samadiani, Emad and Severn, Chris and Sizikov, Gregory and Snelham, Matthew and Souter, Jed and Steinberg, Dan and Swing, Andy and Tan, Mercedes and Thorson, Gregory and Tian, Bo and Toma, Horia and Tuttle, Erick and Vasudevan, Vijay and Walter, Richard and Wang, Walter and Wilcox, Eric and Yoon, Doe Hyun},
+  year = 2017,
+  month = apr,
+  number = {arXiv:1704.04760},
+  eprint = {1704.04760},
+  primaryclass = {cs.AR},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.1704.04760},
+  urldate = {2026-06-25},
+  abstract = {Many architects believe that major improvements in cost-energy-performance must now come from domain-specific hardware. This paper evaluates a custom ASIC---called a Tensor Processing Unit (TPU)---deployed in datacenters since 2015 that accelerates the inference phase of neural networks (NN). The heart of the TPU is a 65,536 8-bit MAC matrix multiply unit that offers a peak throughput of 92 TeraOps/second (TOPS) and a large (28 MiB) software-managed on-chip memory. The TPU's deterministic execution model is a better match to the 99th-percentile response-time requirement of our NN applications than are the time-varying optimizations of CPUs and GPUs (caches, out-of-order execution, multithreading, multiprocessing, prefetching, ...) that help average throughput more than guaranteed latency. The lack of such features helps explain why, despite having myriad MACs and a big memory, the TPU is relatively small and low power. We compare the TPU to a server-class Intel Haswell CPU and an Nvidia K80 GPU, which are contemporaries deployed in the same datacenters. Our workload, written in the high-level TensorFlow framework, uses production NN applications (MLPs, CNNs, and LSTMs) that represent 95\% of our datacenters' NN inference demand. Despite low utilization for some applications, the TPU is on average about 15X - 30X faster than its contemporary GPU or CPU, with TOPS/Watt about 30X - 80X higher. Moreover, using the GPU's GDDR5 memory in the TPU would triple achieved TOPS and raise TOPS/Watt to nearly 70X the GPU and 200X the CPU.},
+  archiveprefix = {arXiv},
+  keywords = {Computer Science - Hardware Architecture,Computer Science - Machine Learning,Computer Science - Neural and Evolutionary Computing},
+  file = {/Users/aarushgoradia/Zotero/storage/U42AU4E5/1704.04760v1.pdf}
+}
+
 @misc{menon2025a,
   title = {Enhancing {{Large Language Models}} for {{Hardware Verification}}: {{A Novel SystemVerilog Assertion Dataset}}},
   shorttitle = {Enhancing {{Large Language Models}} for {{Hardware Verification}}},

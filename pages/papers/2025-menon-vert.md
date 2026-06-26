@@ -1,12 +1,26 @@
 ---
 title: "Enhancing Large Language Models for Hardware Verification: A Novel SystemVerilog Assertion Dataset"
-authors: [Anand Menon, Samit S Miftah, Shamik Kundu, Souvik Kundu, Amisha Srivastava, Arnab Raha, Gabriel T Sonnenschein, Suvadeep Banerjee, Deepak Mathaikutty, Kanad Basu]
+authors:
+  - Anand Menon
+  - Samit S Miftah
+  - Shamik Kundu
+  - Souvik Kundu
+  - Amisha Srivastava
+  - Arnab Raha
+  - Gabriel T Sonnenschein
+  - Suvadeep Banerjee
+  - Deepak Mathaikutty
+  - Kanad Basu
 venue: ""
 year: 2025
 arxiv_id: "2503.08923"
-citekey: "menon2025a"
-tags: [hardware, benchmark, nlp, training]
-status: read-pending-take
+citekey: menon2025a
+tags:
+  - hardware
+  - benchmark
+  - nlp
+  - training
+status: read
 ---
 
 ## Summary
@@ -107,6 +121,7 @@ Variable cleanliness dominates. Training on bad names is worse than not fine-tun
 ## My Take
 
 <!-- HUMAN-OWNED — never overwrite or append to this section -->
+Not the best. Built upon by Veri2 (Built by my group).
 
 ## My Notes
 

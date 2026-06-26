@@ -1,12 +1,25 @@
 ---
-title: "In-Datacenter Performance Analysis of a Tensor Processing Unit"
-authors: ["Norman P. Jouppi", "Cliff Young", "Nishant Patil", "David Patterson", "et al."]
-venue: "ISCA (International Symposium on Computer Architecture)"
+title: In-Datacenter Performance Analysis of a Tensor Processing Unit
+authors:
+  - Norman P. Jouppi
+  - Cliff Young
+  - Nishant Patil
+  - David Patterson
+  - et al.
+venue: ISCA (International Symposium on Computer Architecture)
 year: 2017
 arxiv_id: "1704.04760"
-citekey: "jouppi2017"
-tags: [hardware, accelerator, inference, energy-efficiency, systems, dataflow, quantization, benchmark]
-status: read-pending-take
+citekey: jouppi2017
+tags:
+  - hardware
+  - accelerator
+  - inference
+  - energy-efficiency
+  - systems
+  - dataflow
+  - quantization
+  - benchmark
+status: read
 ---
 
 ## Summary
@@ -168,6 +181,7 @@ _Source: Table 2, p.5. The TPU trades FP capability and memory bandwidth for a l
 ## My Take
 
 <!-- HUMAN-OWNED — never overwrite or append to this section -->
+This was an incredibly interesting paper to read. I had very little knowledge on TPUs beforehand so this explained a lot. They brute-force increased compute but it seems that it leaves the chip strongly memory bound, and so many of the applications cannot benefit from the increase in compute that the TPU gives. Makes sense why Eyeriss was created after, since it helps with the memory issues.
 
 ## My Notes
 
