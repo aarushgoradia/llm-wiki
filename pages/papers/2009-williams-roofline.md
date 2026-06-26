@@ -135,6 +135,7 @@ needs compute work, green needs both.*
 - [[roofline-model]] — the concept page for the model itself
 - [[memory-hierarchy-energy-cost]] — Roofline's "minimize DRAM traffic per op" is the throughput-side analogue of Eyeriss's energy-side argument for reducing off-chip access
 - [[2014-horowitz-computings-energy-problem]] — the energy-side companion to this throughput model: Horowitz's "~1000 ops per DRAM fetch" for efficiency is operational intensity stated in joules rather than bandwidth-time
+- [[2017-jouppi-tpu]] — uses this model (cited as [Wil09]) to analyze a deployed accelerator: the TPU's ridge point at ~1350 ops/weight-byte vs. 13/9 for CPU/GPU is a striking real-world roofline contrast
 - [[dataflow]] — reuse-maximizing dataflows raise operational intensity, sliding a kernel from memory-bound toward compute-bound on the roofline
 - [[eyeriss]] — a memory-bound-conscious CNN accelerator; Roofline is the analytical frame for why its row-stationary reuse matters
 - [[stream]] — the bandwidth microbenchmark used to set the diagonal memory roof

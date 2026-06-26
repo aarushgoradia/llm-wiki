@@ -193,6 +193,7 @@ graph TD
 - [[imagenet]] — the 1000-class task both benchmark CNNs target.
 - [[caffe]] — framework Eyeriss was integrated into for the live demo system.
 - [[2009-williams-roofline]] — Roofline is the throughput-side analytical frame for why minimizing off-chip DRAM traffic (this paper's energy argument via [[memory-hierarchy-energy-cost]]) matters; reuse here = higher [[operational-intensity]] there.
+- [[2017-jouppi-tpu]] — a contemporary [[domain-specific-architecture]] for the same memory-bound problem via a different route: a dense systolic matrix unit rather than this paper's [[row-stationary]] spatial dataflow. The TPU paper discusses Eyeriss directly in its related work.
 
 ## Open Questions
 

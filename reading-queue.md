@@ -2,36 +2,66 @@
 
 <!-- Maintained by Claude during ingest (§7.2 step 2). Sorted by cited-by count, descending. -->
 
-- Eyeriss: A Spatial Architecture for Energy-Efficient Dataflow for Convolutional Neural Networks (2016) — cited by 1 wiki paper
+- Eyeriss: A Spatial Architecture for Energy-Efficient Dataflow for Convolutional Neural Networks (2016) — cited by 2 wiki papers
+- Mastering the Game of Go with Deep Neural Networks and Tree Search (2016) — cited by 2 wiki papers
+- Going Deeper with Convolutions (2015) — cited by 2 wiki papers
+- ImageNet Large Scale Visual Recognition Challenge (2015) — cited by 2 wiki papers
+- Learning Both Weights and Connections for Efficient Neural Network (2015) — cited by 2 wiki papers
+- ShiDianNao: Shifting Vision Processing Closer to the Sensor (2015) — cited by 2 wiki papers
+- Deep Learning with Limited Numerical Precision (2015) — cited by 2 wiki papers
+- Optimizing FPGA-based Accelerator Design for Deep Convolutional Neural Networks (2015) — cited by 2 wiki papers
+- Origami: A Convolutional Network Accelerator (2015) — cited by 2 wiki papers
+- DaDianNao: A Machine-Learning Supercomputer (2014) — cited by 2 wiki papers
+- DianNao: A Small-Footprint High-Throughput Accelerator for Ubiquitous Machine-Learning (2014) — cited by 2 wiki papers
+- Memory-Centric Accelerator Design for Convolutional Neural Networks (2013) — cited by 2 wiki papers
+- ImageNet Classification with Deep Convolutional Neural Networks (2012) — cited by 2 wiki papers
+- A Dynamically Configurable Coprocessor for Convolutional Neural Networks (2010) — cited by 2 wiki papers
+- A Cloud-Scale Acceleration Architecture (Catapult v2) (2016) — cited by 1 wiki paper
+- Google's Neural Machine Translation System: Bridging the Gap between Human and Machine Translation (2016) — cited by 1 wiki paper
+- Fathom: Reference Workloads for Modern Deep Learning Methods (2016) — cited by 1 wiki paper
+- Cambricon: An Instruction Set Architecture for Neural Networks (2016) — cited by 1 wiki paper
+- RedEye: Analog ConvNet Image Sensor Architecture for Continuous Mobile Vision (2016) — cited by 1 wiki paper
+- Minerva: Enabling Low-Power, Highly-Accurate Deep Neural Network Accelerators (2016) — cited by 1 wiki paper
+- Neurocube: A Programmable Digital Neuromorphic Architecture with High-Density 3D Memory (2016) — cited by 1 wiki paper
+- PRIME: A Novel Processing-in-Memory Architecture for Neural Network Computation in ReRAM-Based Main Memory (2016) — cited by 1 wiki paper
+- ISAAC: A Convolutional Neural Network Accelerator with In-Situ Analog Arithmetic in Crossbars (2016) — cited by 1 wiki paper
+- EIE: Efficient Inference Engine on Compressed Deep Neural Network (2016) — cited by 1 wiki paper
+- TensorFlow: Large-Scale Machine Learning on Heterogeneous Distributed Systems (2016) — cited by 1 wiki paper
+- Identity Mappings in Deep Residual Networks (2016) — cited by 1 wiki paper
 - Deep Residual Learning for Image Recognition (2016) — cited by 1 wiki paper
-- Mastering the Game of Go with Deep Neural Networks and Tree Search (2016) — cited by 1 wiki paper
 - End to End Learning for Self-Driving Cars (2016) — cited by 1 wiki paper
 - A 1.42TOPS/W Deep Convolutional Neural Network Recognition Processor for Intelligent IoE Systems (2016) — cited by 1 wiki paper
 - Deep Learning (Nature review) (2015) — cited by 1 wiki paper
-- Going Deeper with Convolutions (2015) — cited by 1 wiki paper
-- Learning Both Weights and Connections for Efficient Neural Network (2015) — cited by 1 wiki paper
-- ImageNet Large Scale Visual Recognition Challenge (2015) — cited by 1 wiki paper
-- ShiDianNao: Shifting Vision Processing Closer to the Sensor (2015) — cited by 1 wiki paper
-- Deep Learning with Limited Numerical Precision (2015) — cited by 1 wiki paper
-- Optimizing FPGA-based Accelerator Design for Deep Convolutional Neural Networks (2015) — cited by 1 wiki paper
+- Toward Accelerating Deep Learning at Scale Using Specialized Hardware in the Datacenter (2015) — cited by 1 wiki paper
+- PuDianNao: A Polyvalent Machine Learning Accelerator (2015) — cited by 1 wiki paper
+- Accelerating Deep Convolutional Neural Networks Using Specialized Hardware (2015) — cited by 1 wiki paper
 - A Ultra-Low-Energy Convolution Engine for Fast Brain-Inspired Vision in Multicore Clusters (2015) — cited by 1 wiki paper
 - A 1.93TOPS/W Scalable Deep Learning/Inference Processor with Tetra-Parallel MIMD Architecture for Big-Data Applications (2015) — cited by 1 wiki paper
-- Origami: A Convolutional Network Accelerator (2015) — cited by 1 wiki paper
+- A Reconfigurable Fabric for Accelerating Large-Scale Datacenter Services (Catapult) (2014) — cited by 1 wiki paper
 - Very Deep Convolutional Networks for Large-Scale Image Recognition (2014) — cited by 1 wiki paper
 - Rich Feature Hierarchies for Accurate Object Detection and Semantic Segmentation (2014) — cited by 1 wiki paper
-- DianNao: A Small-Footprint High-Throughput Accelerator for Ubiquitous Machine-Learning (2014) — cited by 1 wiki paper
-- DaDianNao: A Machine-Learning Supercomputer (2014) — cited by 1 wiki paper
 - A 240 G-ops/s Mobile Coprocessor for Deep Neural Networks (2014) — cited by 1 wiki paper
 - Caffe: Convolutional Architecture for Fast Feature Embedding (2014) — cited by 1 wiki paper
 - SCORPIO: A 36-Core Research Chip Demonstrating Snoopy Coherence on a Scalable Mesh NoC with In-Network Ordering (2014) — cited by 1 wiki paper
 - OverFeat: Integrated Recognition, Localization and Detection Using Convolutional Networks (2013) — cited by 1 wiki paper
-- Memory-Centric Accelerator Design for Convolutional Neural Networks (2013) — cited by 1 wiki paper
-- ImageNet Classification with Deep Convolutional Neural Networks (2012) — cited by 1 wiki paper
+- Convolution Engine: Balancing Efficiency and Flexibility in Specialized Computing (2013) — cited by 1 wiki paper
+- The Tail at Scale (2013) — cited by 1 wiki paper
+- NeuFlow: A Runtime Reconfigurable Dataflow Processor for Vision (2011) — cited by 1 wiki paper
 - Understanding Sources of Inefficiency in General-Purpose Chips (2010) — cited by 1 wiki paper
 - Towards an Embedded Biologically-Inspired Machine Vision Processor (2010) — cited by 1 wiki paper
-- A Dynamically Configurable Coprocessor for Convolutional Neural Networks (2010) — cited by 1 wiki paper
 - Convolutional Networks and Applications in Vision (2010) — cited by 1 wiki paper
 - Rectified Linear Units Improve Restricted Boltzmann Machines (2010) — cited by 1 wiki paper
 - A 48-Core IA-32 Message-Passing Processor with DVFS in 45 nm CMOS (2010) — cited by 1 wiki paper
 - A Massively Parallel Coprocessor for Convolutional Neural Networks (2009) — cited by 1 wiki paper
+- CNP: An FPGA-based Processor for Convolutional Networks (2009) — cited by 1 wiki paper
+- Identifying Shades of Green: The SPECpower Benchmarks (2009) — cited by 1 wiki paper
+- The Datacenter as a Computer (2009) — cited by 1 wiki paper
+- The Case for Energy-Proportional Computing (2007) — cited by 1 wiki paper
+- Latency Lags Bandwidth (2004) — cited by 1 wiki paper
 - Gradient-Based Learning Applied to Document Recognition (1998) — cited by 1 wiki paper
+- Special-Purpose Digital Hardware for Neural Networks: An Architectural Survey (1996) — cited by 1 wiki paper
+- A VLSI Architecture for High-Performance, Low-Cost, On-Chip Learning (1990) — cited by 1 wiki paper
+- Decoupled Access/Execute Computer Architectures (1984) — cited by 1 wiki paper
+- Why Systolic Architectures? (1982) — cited by 1 wiki paper
+- Algorithms for VLSI Processor Arrays (1980) — cited by 1 wiki paper
+- The Case for the Reduced Instruction Set Computer (1980) — cited by 1 wiki paper

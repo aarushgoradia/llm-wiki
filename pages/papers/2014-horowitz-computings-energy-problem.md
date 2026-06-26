@@ -101,6 +101,7 @@ _Source: Figure 1.1.9, p.5. The ~4-order-of-magnitude gap between a 32-bit int a
 - [[no-local-reuse]] — a design point that responds to this energy reality by maximizing on-chip buffering instead of PE-local reuse.
 - [[chisel]], [[genesis-2]], [[spiral]] — the hardware-generation and DSL tools Horowitz names as enablers of application-optimized computing.
 - [[cpu-db]] — the Stanford microprocessor database supplying the historical scaling data behind Figures 1.1.1–1.1.4.
+- [[2017-jouppi-tpu]] — this specialization thesis realized in silicon: the TPU is a deployed [[domain-specific-architecture]] whose 8-bit-vs-FP energy/area ratios echo Fig 1.1.9's data-movement-dominates argument.
 
 ## Open Questions
 

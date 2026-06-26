@@ -20,6 +20,10 @@
 - [ ] Can hardware generators and DSLs (Chisel, Genesis 2, SPIRAL) actually let application experts — not hardware designers — build accelerators that reach the 2–3 orders-of-magnitude efficiency specialization promises? This is the talk's central bet and remains largely unvalidated. — *from [[2014-horowitz-computings-energy-problem]], 2026-06-25*
 - [ ] How do the Fig 1.1.9 compute-vs-SRAM-vs-DRAM energy ratios shift at modern nodes (7nm/5nm) and with HBM/3D-stacked memory, and do they still justify the same specialization conclusions? — *from [[2014-horowitz-computings-energy-problem]], 2026-06-25*
 - [ ] Has the DRAM-I/O energy problem (>20pJ/bit) actually been mitigated in deployed systems, given that efficient links were demonstrated but interface standards change slowly? — *from [[2014-horowitz-computings-energy-problem]], 2026-06-25*
+- [ ] The TPU is memory-bound on most of its own workload yet shipped with DDR3 and compute far past what the memory can feed — beyond the 15-month schedule, what justifies over-provisioning compute, and is it ever the right call? — *from [[2017-jouppi-tpu]], 2026-06-25*
+- [ ] Does the "minimalism beats average-case microarchitecture for 99th-percentile latency" argument survive the shift to transformer/LLM inference, where attention and KV-cache traffic reshape the operational-intensity and latency picture? — *from [[2017-jouppi-tpu]], 2026-06-25*
+- [ ] How much of the TPU's win is the architecture itself vs. 8-bit quantization + TensorFlow co-design — would a similarly minimal, quantized CPU/GPU datapath close much of the gap? — *from [[2017-jouppi-tpu]], 2026-06-25*
+- [ ] IPS is shown to mislead by up to 75× as a summary metric; what architecture-independent benchmark (the paper points at Fathom) actually captures NN-accelerator performance across MLP/CNN/LSTM/transformer? — *from [[2017-jouppi-tpu]], 2026-06-25*
 
 ## My Hunches
 <!-- HUMAN-OWNED — never touch this section -->

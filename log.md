@@ -85,3 +85,19 @@
 - PDF mirrored to raw/papers/horowitz2014.pdf (gitignored, not committed).
 - No contradictions (energy ratios corroborate the existing memory-hierarchy concept page).
 - Added 3 open questions to research-agenda.md (tooling-for-app-experts bet, energy ratios at modern nodes/HBM, DRAM-I/O mitigation in deployment).
+
+## [2026-06-25] ingest | In-Datacenter Performance Analysis of a Tensor Processing Unit
+
+- Created [[2017-jouppi-tpu]] (paper, status read-pending-take, citekey jouppi2017, ISCA 2017, arXiv 1704.04760)
+- Created systems [[tpu]], [[tensorflow]], [[nvidia-k80]], [[intel-haswell]] (the chip under test, its programming model, and the two baselines). intel-haswell is the Xeon E5-2699 v3, distinct from the Clovertown-era [[intel-xeon]] (Roofline) — cross-linked. Skipped related-work name-drops as system pages (Catapult, EIE, Cambricon, Minerva, ISAAC, DianNao family, NeuFlow, PRIME, Neurocube) — comparisons, not used by the paper; the substantive ones are in reading-queue.md.
+- Created concept [[domain-specific-architecture]] — now at 2+ substantive treatments (Horowitz specialization §6 + TPU throughout); links Horowitz, TPU, Eyeriss.
+- Held off on a `systolic-array` concept page: only this paper treats it substantively so far (1 mention, below the 2+ threshold). De-linked in the paper page; watch item for the next systolic paper.
+- No person page: David Patterson now at 2 wiki papers (Roofline + TPU), below the 3+ threshold.
+- Citation graph: SUCCESS this time (arXiv-hosted, so S2 has references — the resolve_citation.py elision fix worked). 78 references retrieved; venue confirmed as ISCA 2017. Coverage: 1 of 78 already a wiki paper page ([[2009-williams-roofline]], cited as [Wil09]); Eyeriss (ISCA 2016 companion) is in the queue, not yet a page.
+- reading-queue.md: incremented 14 references to "cited by 2" (Eyeriss, Go, DianNao, DaDianNao, ShiDianNao, Origami, ImageNet ×2, Going Deeper, Learning Weights+Connections, Optimizing FPGA, Limited Numerical Precision, Memory-Centric, Dyn. Configurable Coprocessor); added ~30 new substantive references (Catapult v1/v2, EIE, Cambricon, Minerva, ISAAC, PRIME, Neurocube, Fathom, GNMT, PuDianNao, Convolution Engine, The Tail at Scale, NeuFlow, energy-proportionality, systolic-array classics, RISC, etc.). Filtered out patents, news/web URLs, spec sheets, talks/webinars, and textbook editions.
+- Backlinks added from [[roofline-model]], [[operational-intensity]] (concept Key Papers), and papers [[2009-williams-roofline]], [[2017-chen-eyeriss]], [[2014-horowitz-computings-energy-problem]].
+- pull_annotations.py jouppi2017 → many annotations (Aarush read this closely), pasted verbatim → page is "read but unprocessed".
+- PDF mirrored to raw/papers/jouppi2017.pdf (gitignored).
+- No contradictions: TPU corroborates the roofline / memory-energy / specialization cluster; its Eyeriss contrast (systolic dense matrix vs row-stationary) is complementary, not conflicting.
+- Added 4 open questions to research-agenda.md (over-provisioned compute vs memory, minimalism-for-transformers, architecture-vs-quantization/TF, IPS/Fathom benchmark).
+- index.md "Needs Your Take" regenerated from live status: Aarush has promoted Roofline, Eyeriss, and Horowitz to `status: read` with My Takes (uncommitted in working tree); they are removed from the pending list. Now pending: unprocessed {VERT, TPU}, not-opened {CodeV}.

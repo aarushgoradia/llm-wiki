@@ -41,6 +41,9 @@ rightward (see [[operational-intensity]]).
 
 - [[2009-williams-roofline]] — introduces the model, ridge point, and ceilings; validates on
   four 2008-era multicores × four kernels (16/16 cases bounded).
+- [[2017-jouppi-tpu]] — applies Roofline to a deployed accelerator: per-die rooflines (Fig 5–8)
+  show the TPU's ridge point at ~1350 ops/weight-byte vs. 13 (Haswell) and 9 (K80), and that
+  four of six NN workloads are memory-bound on the TPU.
 
 ## Variants and Related Concepts
 

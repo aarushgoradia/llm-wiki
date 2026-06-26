@@ -43,6 +43,9 @@ reuse-maximizing [[dataflow]] does both at once.
 - [[2009-williams-roofline]] — defines operational intensity and uses it as the basis of the
   Roofline model; reports measured intensities of 0.25–1.64 (median 0.60) across 16
   kernel×machine pairs.
+- [[2017-jouppi-tpu]] — redefines operational intensity for inference as integer ops per byte
+  of *weights* read (weights dominate DRAM traffic), and uses it to explain why MLPs/LSTMs are
+  memory-bound while CNNs are compute-bound on the TPU.
 
 ## Variants and Related Concepts
 
