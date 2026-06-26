@@ -19,7 +19,6 @@
 - Origami: A Convolutional Network Accelerator (2015) — cited by 1 wiki paper
 - Very Deep Convolutional Networks for Large-Scale Image Recognition (2014) — cited by 1 wiki paper
 - Rich Feature Hierarchies for Accurate Object Detection and Semantic Segmentation (2014) — cited by 1 wiki paper
-- Computing's Energy Problem (and What We Can Do About It) (2014) — cited by 1 wiki paper
 - DianNao: A Small-Footprint High-Throughput Accelerator for Ubiquitous Machine-Learning (2014) — cited by 1 wiki paper
 - DaDianNao: A Machine-Learning Supercomputer (2014) — cited by 1 wiki paper
 - A 240 G-ops/s Mobile Coprocessor for Deep Neural Networks (2014) — cited by 1 wiki paper

@@ -17,6 +17,9 @@
 - [ ] Can performance counters automatically set ceiling heights and reorder them per kernel, turning Roofline from a static guide into a measured, kernel-specific one (the paper's own Appendix A.3 direction)? — *from [[2009-williams-roofline]], 2026-06-15*
 - [ ] Does Roofline extend usefully to GPUs and vector processors, and to non-floating-point metrics (sorts/sec, frames/sec) and other traffic axes (L2/L3, I/O bandwidth)? — *from [[2009-williams-roofline]], 2026-06-15*
 - [ ] Is the ridge point a robust predictor of programming productivity beyond these four kernels and four machines? — *from [[2009-williams-roofline]], 2026-06-15*
+- [ ] Can hardware generators and DSLs (Chisel, Genesis 2, SPIRAL) actually let application experts — not hardware designers — build accelerators that reach the 2–3 orders-of-magnitude efficiency specialization promises? This is the talk's central bet and remains largely unvalidated. — *from [[2014-horowitz-computings-energy-problem]], 2026-06-25*
+- [ ] How do the Fig 1.1.9 compute-vs-SRAM-vs-DRAM energy ratios shift at modern nodes (7nm/5nm) and with HBM/3D-stacked memory, and do they still justify the same specialization conclusions? — *from [[2014-horowitz-computings-energy-problem]], 2026-06-25*
+- [ ] Has the DRAM-I/O energy problem (>20pJ/bit) actually been mitigated in deployed systems, given that efficient links were demonstrated but interface standards change slowly? — *from [[2014-horowitz-computings-energy-problem]], 2026-06-25*
 
 ## My Hunches
 <!-- HUMAN-OWNED — never touch this section -->

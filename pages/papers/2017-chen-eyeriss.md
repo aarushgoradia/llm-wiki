@@ -187,6 +187,7 @@ graph TD
 - [[row-stationary]] — the dataflow this paper introduces and implements.
 - [[weight-stationary]] / [[output-stationary]] / [[no-local-reuse]] — the competing dataflow classes RS is compared against (comparison itself in the ISCA 2016 companion).
 - [[memory-hierarchy-energy-cost]] — the four-level hierarchy and its energy-per-access ordering is the premise the whole design optimizes against.
+- [[2014-horowitz-computings-energy-problem]] — supplies the quantitative energy numbers (DRAM ~1–2nJ vs. on-chip op ~pJ) that motivate this accelerator; Horowitz's "convolution-like dataflow, ~1000 ops per DRAM fetch" prescription is what row-stationary implements.
 - [[alexnet]] — primary measured benchmark (5 CONV layers).
 - [[vgg-16]] — second measured benchmark (13 CONV layers).
 - [[imagenet]] — the 1000-class task both benchmark CNNs target.

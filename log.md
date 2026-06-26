@@ -71,3 +71,17 @@
 - Backlinks added from [[memory-hierarchy-energy-cost]], [[dataflow]], and [[2017-chen-eyeriss]] to the new roofline/operational-intensity pages
 - No contradictions (Roofline is orthogonal/foundational to existing pages); no person pages (all three authors at 1 wiki paper, threshold 3)
 - Added 3 open questions to research-agenda.md (auto ceilings, GPU/non-FP generalization, ridge-point-as-productivity-predictor)
+
+## [2026-06-25] ingest | Computing's Energy Problem (and What We Can Do about It)
+
+- Created [[2014-horowitz-computings-energy-problem]] (paper, status read-pending-take, citekey horowitz2014, ISSCC 2014, Mark Horowitz plenary)
+- Created systems [[chisel]], [[genesis-2]], [[spiral]] (hardware-generation/DSL tools, ref [11]/[12]/[13]) and [[cpu-db]] (Stanford microprocessor dataset, refs [4]/[5]). Skipped the Fig 1.1.8 chip labels (Dunnington, Sandy Bridge, Ivy Bridge, Zacate, Godson-3B, ARM-v7A, etc.) — data points in a borrowed slide, not systems the paper uses.
+- No new concept pages: Dennard scaling, DVFS, the power wall, and specialization each have only 1 substantive mention (this paper), below the 2+ threshold. No person page: Horowitz now at 1 wiki paper (threshold 3).
+- This paper supplies the quantitative energy numbers that [[memory-hierarchy-energy-cost]] previously flagged as "not yet in the wiki" — updated that concept's How It Works + Key Papers to cite Fig 1.1.9 (DRAM ~1.3–2.6nJ vs op ~0.1pJ, ~4 orders of magnitude). Removed Horowitz line from reading-queue.md (now ingested).
+- Backlinks added from [[2017-chen-eyeriss]] and [[2009-williams-roofline]] (energy-side companion to operational intensity / minimize-DRAM-traffic argument).
+- Citation graph: Semantic Scholar references endpoint returned `data: null` (publisher-elided), same failure mode as the Eyeriss and Roofline ingests; could not auto-map references (Dennard 1974, CPU DB, Chisel, Genesis 2, SPIRAL, Malladi ISCA'12). reading-queue.md not extended with Horowitz's own refs.
+- Energy table (Fig 1.1.9) transcribed as an anchored markdown table rather than extracted as an image — the figure is essentially tabular data, better represented searchably.
+- pull_annotations.py horowitz2014 → 3 annotations, pasted verbatim into Highlights → page listed under "Read but unprocessed".
+- PDF mirrored to raw/papers/horowitz2014.pdf (gitignored, not committed).
+- No contradictions (energy ratios corroborate the existing memory-hierarchy concept page).
+- Added 3 open questions to research-agenda.md (tooling-for-app-experts bet, energy ratios at modern nodes/HBM, DRAM-I/O mitigation in deployment).
