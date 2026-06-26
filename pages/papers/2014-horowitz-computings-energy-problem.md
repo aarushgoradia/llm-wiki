@@ -1,12 +1,18 @@
 ---
-title: "Computing's Energy Problem (and What We Can Do about It)"
-authors: ["Mark Horowitz"]
-venue: "ISSCC (IEEE International Solid-State Circuits Conference)"
+title: Computing's Energy Problem (and What We Can Do about It)
+authors:
+  - Mark Horowitz
+venue: ISSCC (IEEE International Solid-State Circuits Conference)
 year: 2014
 arxiv_id: ""
-citekey: "horowitz2014"
-tags: [energy-efficiency, hardware, accelerator, memory, architecture]
-status: read-pending-take
+citekey: horowitz2014
+tags:
+  - energy-efficiency
+  - hardware
+  - accelerator
+  - memory
+  - architecture
+status: read
 ---
 
 ## Summary
@@ -105,6 +111,7 @@ _Source: Figure 1.1.9, p.5. The ~4-order-of-magnitude gap between a 32-bit int a
 ## My Take
 
 <!-- HUMAN-OWNED — never overwrite or append to this section -->
+Obviously an incredibly useful paper. Explains the next important issues that we have to look at in scaling architecture to be even faster and more efficient. Not much else to be said.
 
 ## My Notes
 

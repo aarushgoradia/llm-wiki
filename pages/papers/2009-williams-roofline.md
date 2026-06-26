@@ -1,12 +1,19 @@
 ---
 title: "Roofline: An Insightful Visual Performance Model for Multicore Architectures"
-authors: ["Samuel Williams", "Andrew Waterman", "David Patterson"]
-venue: "Communications of the ACM"
+authors:
+  - Samuel Williams
+  - Andrew Waterman
+  - David Patterson
+venue: Communications of the ACM
 year: 2009
 arxiv_id: ""
-citekey: "williams2009"
-tags: [hardware, memory, systems, theory]
-status: read-pending-take
+citekey: williams2009
+tags:
+  - hardware
+  - memory
+  - systems
+  - theory
+status: read
 ---
 
 ## Summary
@@ -127,6 +134,7 @@ needs compute work, green needs both.*
 - [[operational-intensity]] — this paper defines the concept; the roofline's x-axis
 - [[roofline-model]] — the concept page for the model itself
 - [[memory-hierarchy-energy-cost]] — Roofline's "minimize DRAM traffic per op" is the throughput-side analogue of Eyeriss's energy-side argument for reducing off-chip access
+- [[2014-horowitz-computings-energy-problem]] — the energy-side companion to this throughput model: Horowitz's "~1000 ops per DRAM fetch" for efficiency is operational intensity stated in joules rather than bandwidth-time
 - [[dataflow]] — reuse-maximizing dataflows raise operational intensity, sliding a kernel from memory-bound toward compute-bound on the roofline
 - [[eyeriss]] — a memory-bound-conscious CNN accelerator; Roofline is the analytical frame for why its row-stationary reuse matters
 - [[stream]] — the bandwidth microbenchmark used to set the diagonal memory roof
@@ -147,6 +155,7 @@ needs compute work, green needs both.*
 ## My Take
 
 <!-- HUMAN-OWNED — never overwrite or append to this section -->
+Incredibly interesting and useful model for understanding computation in a parallel context. Although this isn't the most important paper that I'll read, it's definitely a strong baseline for papers downstream. I'm sure future parallel computing papers rely on the assumptions and models here. Also interesting to see what levels of optimizations change stuff.
 
 ## My Notes
 
