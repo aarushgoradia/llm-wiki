@@ -66,15 +66,26 @@ def search_semantic_scholar(title: str, api_key: str | None = None) -> dict | No
     }
 
 
+class GraphElided(Exception):
+    """Raised when the publisher has elided the requested field from S2."""
+
+
 def fetch_graph(paper_id: str, api_key: str | None = None) -> dict | None:
-    """Fetch reference list and citing papers. Returns None if rate-limited."""
+    """Fetch reference list and citing papers. Returns None if rate-limited;
+    raises GraphElided if the publisher has withheld the field (data: null)."""
     def entries(endpoint: str, key: str, limit: int) -> list | None:
         params = urllib.parse.urlencode({"fields": S2_GRAPH_FIELDS, "limit": limit})
         data = s2_get(f"{S2_PAPER_URL}/{paper_id}/{endpoint}?{params}", api_key=api_key)
         if data is None:
             return None
+        # S2 returns HTTP 200 with {"data": null, ...} when the publisher has
+        # elided the field (common for IEEE/ACM papers). .get("data", []) would
+        # return None here (key present, value null), so guard explicitly.
+        rows = data.get("data")
+        if rows is None:
+            raise GraphElided(endpoint)
         out = []
-        for item in data.get("data", []):
+        for item in rows:
             p = item.get(key) or {}
             if not p.get("title"):
                 continue
@@ -169,7 +180,12 @@ def main():
     if args.graph:
         if result.get("source") != "semantic_scholar" or not result.get("paper_id"):
             sys.exit("Citation graph requires Semantic Scholar (rate-limited or not found there); try again later.")
-        graph = fetch_graph(result["paper_id"], api_key=args.api_key)
+        try:
+            graph = fetch_graph(result["paper_id"], api_key=args.api_key)
+        except GraphElided as e:
+            sys.exit(f"Semantic Scholar has no citation graph for this paper: "
+                     f"the publisher has elided the '{e}' field (common for "
+                     f"IEEE/ACM papers). Not retryable; map references manually.")
         if graph is None:
             sys.exit("Semantic Scholar graph endpoints rate-limited; try again later.")
         result["references"] = graph["references"]
